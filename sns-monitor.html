@@ -50,24 +50,11 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--off);color:var(--g90
 .ni.act{background:var(--ig-l);color:var(--ig);font-weight:600;}
 .ni.act .nicon{background:var(--ig);color:white;}
 .nicon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;background:var(--g100);transition:all .15s;flex-shrink:0;}
-.nbadge{margin-left:auto;background:var(--g200);color:var(--g500);font-size:10px;padding:2px 6px;border-radius:10px;}
-.ni.act .nbadge{background:var(--ig-m);color:var(--ig);}
-.sacc{padding:0 12px 16px;}
-.ami{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:8px;cursor:pointer;transition:background .15s;}
-.ami:hover{background:var(--g50);}
-.amav{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;font-family:'DM Sans',sans-serif;}
-.amn{font-size:12px;font-weight:500;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.sdot2{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
 .main{flex:1;display:flex;flex-direction:column;min-width:0;}
 .topbar{background:var(--w);border-bottom:1px solid var(--g200);padding:0 28px;height:58px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:40;}
 .tbtitle{font-family:'DM Serif Display',serif;font-size:18px;flex:1;}
-.tbstats{display:flex;gap:18px;}
-.ts{text-align:center;}
-.tsv{font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;line-height:1;}
-.tsl{font-size:10px;color:var(--g400);text-transform:uppercase;letter-spacing:.8px;margin-top:2px;}
 .btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;border:none;cursor:pointer;font-size:13px;font-weight:500;font-family:'Noto Sans JP',sans-serif;transition:all .15s;}
 .bp{background:var(--ig);color:white;}.bp:hover{background:#c9184a;}
-.bo{background:white;border:1.5px solid var(--g200);color:var(--g700);}.bo:hover{border-color:var(--g400);}
 .btn:disabled{opacity:.5;cursor:not-allowed;}
 .page{display:none;flex:1;overflow-y:auto;}
 .page.act{display:flex;flex-direction:column;}
@@ -112,65 +99,6 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--off);color:var(--g90
 .engv{font-family:'DM Sans',sans-serif;font-weight:700;font-size:12px;}
 .engbw{flex:1;height:3px;background:var(--g100);border-radius:2px;overflow:hidden;}
 .engbf{height:100%;border-radius:2px;transition:width .6s;}
-.calh{display:flex;align-items:center;gap:12px;margin-bottom:18px;}
-.calnav{background:white;border:1.5px solid var(--g200);width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;transition:all .15s;}
-.calnav:hover{border-color:var(--ig);color:var(--ig);}
-.calmtitle{font-family:'DM Serif Display',serif;font-size:20px;}
-.calleg{margin-left:auto;display:flex;gap:10px;align-items:center;}
-.legit{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--g500);}
-.legdot{width:9px;height:9px;border-radius:3px;}
-.calgw{background:white;border-radius:var(--r);border:1px solid var(--g200);overflow:hidden;}
-.caldow{display:grid;grid-template-columns:repeat(7,1fr);background:var(--g50);border-bottom:1px solid var(--g200);}
-.caldow div{text-align:center;padding:9px 4px;font-size:10px;font-weight:600;color:var(--g400);}
-.calcells{display:grid;grid-template-columns:repeat(7,1fr);}
-.calcel{min-height:90px;padding:7px 5px;border-right:1px solid var(--g100);border-bottom:1px solid var(--g100);}
-.calcel:nth-child(7n){border-right:none;}
-.calcel.om .cdn{color:var(--g300);}
-.calcel.tod .cdn{background:var(--ig);color:white;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
-.cdn{font-size:11px;font-weight:600;color:var(--g600);margin-bottom:3px;width:22px;height:22px;display:flex;align-items:center;justify-content:center;}
-.calposts{display:flex;flex-direction:column;gap:2px;}
-.cpd{border-radius:3px;padding:2px 4px;font-size:9px;font-weight:500;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;}
-.cpd.igd{background:var(--ig-l);color:var(--ig);}
-.cpd.xd{background:var(--xl);color:var(--xp);}
-.cmore{font-size:9px;color:var(--g400);padding:1px 4px;}
-.rgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;}
-.rcard{background:white;border-radius:var(--r);border:1px solid var(--g200);padding:18px;}
-.rctitle{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--g400);font-weight:600;margin-bottom:7px;}
-.rcval{font-family:'DM Sans',sans-serif;font-size:26px;font-weight:700;line-height:1;}
-.rcsub{font-size:12px;color:var(--g400);margin-top:3px;}
-.raisec{background:white;border-radius:var(--r);border:1px solid var(--g200);overflow:hidden;margin-bottom:18px;}
-.raih{padding:14px 18px;background:linear-gradient(135deg,#fff0f4,#fff5f7);border-bottom:1px solid var(--ig-m);display:flex;align-items:center;justify-content:space-between;}
-.raititle{font-weight:700;font-size:14px;}
-.raibody{padding:18px;font-size:13px;line-height:1.8;color:var(--g600);}
-.raibody strong{color:var(--g900);}
-.raibody .itag{display:inline-block;background:var(--ig-l);color:var(--ig);border:1px solid var(--ig-m);padding:3px 9px;border-radius:20px;font-size:12px;margin:3px;font-weight:500;}
-.tpsec{background:white;border-radius:var(--r);border:1px solid var(--g200);overflow:hidden;}
-.shead{padding:14px 18px;border-bottom:1px solid var(--g100);font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:space-between;}
-.dsel{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;}
-.dab{display:flex;align-items:center;gap:8px;padding:9px 14px;border-radius:var(--rs);border:1.5px solid var(--g200);background:white;cursor:pointer;transition:all .15s;font-size:13px;}
-.dab:hover{border-color:var(--g400);}
-.dab.act{border-color:var(--ig);background:var(--ig-l);}
-.dab.act.xa{border-color:var(--xp);background:var(--xl);}
-.dsr{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
-.ds{background:white;border-radius:var(--r);border:1px solid var(--g200);padding:16px;}
-.dsl{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--g400);font-weight:600;margin-bottom:5px;}
-.dsv{font-family:'DM Sans',sans-serif;font-size:24px;font-weight:700;}
-.dssub{font-size:11px;color:var(--g400);margin-top:3px;}
-.gbars{background:white;border-radius:var(--r);border:1px solid var(--g200);padding:18px;}
-.gbr{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
-.gbl{font-size:12px;font-weight:500;width:95px;flex-shrink:0;}
-.gbt{flex:1;height:7px;background:var(--g100);border-radius:3px;overflow:hidden;}
-.gbf{height:100%;border-radius:3px;transition:width .6s;}
-.gbc{font-size:12px;font-weight:700;width:28px;text-align:right;font-family:'DM Sans',sans-serif;}
-.amgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:10px;margin-bottom:20px;}
-.amc{background:white;border-radius:var(--r);border:1.5px solid var(--g200);padding:14px;transition:all .15s;cursor:pointer;}
-.amc:hover{border-color:var(--ig);}
-.amc.xa:hover{border-color:var(--xp);}
-.amch{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
-.amcav{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;font-family:'DM Sans',sans-serif;flex-shrink:0;}
-.amcs{display:flex;gap:10px;}
-.amcsv{font-family:'DM Sans',sans-serif;font-weight:700;font-size:15px;}
-.amcsl{font-size:9px;color:var(--g400);text-transform:uppercase;letter-spacing:.5px;}
 .movl{position:fixed;inset:0;background:rgba(0,0,0,.4);backdrop-filter:blur(6px);z-index:200;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s;}
 .movl.open{opacity:1;pointer-events:all;}
 .modal{background:white;width:100%;max-width:540px;border-radius:20px 20px 0 0;max-height:90vh;overflow-y:auto;transform:translateY(40px);transition:transform .25s;}
@@ -185,11 +113,9 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--off);color:var(--g90
 .fi{width:100%;background:var(--g50);border:1.5px solid var(--g200);color:var(--g900);padding:9px 13px;border-radius:10px;font-size:14px;outline:none;font-family:'Noto Sans JP',sans-serif;transition:border-color .15s;}
 .fi:focus{border-color:var(--ig);background:white;}
 .fr{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.sbtns{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-.sbtn{padding:9px;border-radius:10px;border:1.5px solid var(--g200);background:white;cursor:pointer;text-align:center;transition:all .15s;font-family:'Noto Sans JP',sans-serif;font-size:13px;font-weight:500;}
-.sbtn.sig{border-color:var(--ig);background:var(--ig-l);color:var(--ig);}
-.sbtn.sx{border-color:var(--xp);background:var(--xl);color:var(--xp);}
 .hint{font-size:11px;color:var(--g400);margin-top:3px;}
+.toast{position:fixed;bottom:76px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--g900);color:white;padding:9px 18px;border-radius:10px;font-size:13px;z-index:300;opacity:0;transition:all .25s;pointer-events:none;white-space:nowrap;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 .mobile-tabs{display:none;}
 @media(max-width:767px){
   .sidebar{display:none;}
@@ -199,22 +125,13 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--off);color:var(--g90
   .tabicon{font-size:19px;line-height:1;}
   .tablbl{font-size:9px;font-weight:600;margin-top:2px;letter-spacing:.3px;}
   .pi{padding:14px;padding-bottom:76px;}
-  .topbar{padding:0 14px;}
-  .tbstats{display:none;}
-  .rgrid{grid-template-columns:repeat(2,1fr);}
-  .dsr{grid-template-columns:repeat(2,1fr);}
   .pgrid{grid-template-columns:repeat(2,1fr);gap:10px;}
-  .calcel{min-height:55px;}
 }
+.spin2{width:13px;height:13px;border:2px solid rgba(255,255,255,.3);border-top-color:white;border-radius:50%;animation:sp .6s linear infinite;display:inline-block;}
+@keyframes sp{to{transform:rotate(360deg)}}
 .tdots span{display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--ig);margin:0 2px;animation:td 1.2s infinite;}
 .tdots span:nth-child(2){animation-delay:.2s;}.tdots span:nth-child(3){animation-delay:.4s;}
 @keyframes td{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-5px);opacity:1}}
-.spin2{width:13px;height:13px;border:2px solid rgba(255,255,255,.3);border-top-color:white;border-radius:50%;animation:sp .6s linear infinite;display:inline-block;}
-@keyframes sp{to{transform:rotate(360deg)}}
-.toast{position:fixed;bottom:76px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--g900);color:white;padding:9px 18px;border-radius:10px;font-size:13px;z-index:300;opacity:0;transition:all .25s;pointer-events:none;white-space:nowrap;}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
-@media(min-width:768px){.toast{bottom:22px;}}
-.empty{text-align:center;padding:50px 20px;color:var(--g400);}
 ::-webkit-scrollbar{width:4px;height:4px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:var(--g200);border-radius:2px;}
 </style>
 </head>
@@ -225,99 +142,40 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--off);color:var(--g90
   <div class="sync-bar"><div class="sdot" id="sdot"></div><span id="slbl">接続中...</span></div>
   <div class="snav">
     <div class="nlbl">メニュー</div>
-    <button class="ni act" onclick="go('dashboard',this)"><span class="nicon">📊</span>ダッシュボード<span class="nbadge" id="nb-d"></span></button>
-    <button class="ni" onclick="go('feed',this)"><span class="nicon">🗂</span>投稿一覧<span class="nbadge" id="nb-f">0</span></button>
-    <button class="ni" onclick="go('calendar',this)"><span class="nicon">📅</span>カレンダー</button>
-    <button class="ni" onclick="go('report',this)"><span class="nicon">📈</span>週次レポート</button>
-  </div>
-  <div class="sacc">
-    <div class="nlbl" style="padding:0 8px;margin-bottom:6px">監視アカウント</div>
-    <div id="sacclist"></div>
-    <button class="ni" style="margin-top:4px" onclick="openAccModal()"><span class="nicon" style="background:var(--ig-l);color:var(--ig)">+</span><span style="color:var(--ig);font-weight:600">アカウント追加</span></button>
+    <button class="ni act" onclick="go('dashboard',this)"><span class="nicon">📊</span>ダッシュボード</button>
+    <button class="ni" onclick="go('feed',this)"><span class="nicon">🗂</span>投稿一覧</button>
   </div>
 </nav>
 <div class="main">
   <div class="topbar">
     <div class="tbtitle" id="tbtitle">ダッシュボード</div>
-    <div class="tbstats">
-      <div class="ts"><div class="tsv" id="tst">0</div><div class="tsl">投稿</div></div>
-      <div class="ts"><div class="tsv" id="tsa">0</div><div class="tsl">アカウント</div></div>
-      <div class="ts"><div class="tsv" id="tse">—</div><div class="tsl">平均ENG</div></div>
-    </div>
     <button class="btn bp" onclick="openPostModal()">＋ 投稿追加</button>
   </div>
   <!-- DASHBOARD -->
-  <div class="page act" id="page-dashboard">
-    <div class="pi">
-      <div class="dsel" id="dsel"></div>
-      <div class="dsr">
-        <div class="ds"><div class="dsl">総投稿数</div><div class="dsv" id="ds-t">0</div><div class="dssub">件</div></div>
-        <div class="ds"><div class="dsl">平均いいね</div><div class="dsv" id="ds-l">—</div><div class="dssub">件/投稿</div></div>
-        <div class="ds"><div class="dsl">平均ENG率</div><div class="dsv" id="ds-e">—</div><div class="dssub">%</div></div>
-        <div class="ds"><div class="dsl">HOT投稿</div><div class="dsv" id="ds-h">0</div><div class="dssub">件</div></div>
-      </div>
-      <div class="gbars" style="margin-bottom:18px"><div style="font-weight:700;font-size:14px;margin-bottom:12px">ジャンル分布</div><div id="dgbars"></div></div>
-      <div style="font-weight:700;font-size:14px;margin-bottom:12px">最近の投稿</div>
-      <div class="pgrid" id="drp"></div>
-      <div style="font-weight:700;font-size:14px;margin:20px 0 12px">アカウント一覧</div>
-      <div class="amgrid" id="amg"></div>
+  <div class="page act" id="page-dashboard"><div class="pi">
+    <div class="addbar" onclick="openGoogleSheets()" style="background:#ecfdf5;border-color:#86efac">
+      <div class="addbar-icon">📊</div>
+      <div style="flex:1"><div style="font-weight:600;font-size:14px;color:var(--g700)">Google Sheetsから読み込み</div><div style="font-size:12px;color:var(--g400);margin-top:2px">登録したスプレッドシートからURLを自動取得・分析</div></div>
+      <button class="btn bp">読み込む</button>
     </div>
-  </div>
+    <div class="addbar" onclick="openFileUpload()">
+      <div class="addbar-icon">📎</div>
+      <div style="flex:1"><div style="font-weight:600;font-size:14px;color:var(--g700)">URLファイルをアップロード</div><div style="font-size:12px;color:var(--g400);margin-top:2px">テキストファイルから複数URLを一括読み込み</div></div>
+      <button class="btn bp">アップロード</button>
+    </div>
+  </div></div>
   <!-- FEED -->
-  <div class="page" id="page-feed">
-    <div class="pi">
-      <div class="addbar" onclick="openPostModal()">
-        <div class="addbar-icon">📎</div>
-        <div style="flex:1"><div style="font-weight:600;font-size:14px;color:var(--g700)">投稿を追加・AI分析</div><div style="font-size:12px;color:var(--g400);margin-top:2px">URLまたはキャプションを貼り付けてAIが自動分析</div></div>
-        <button class="btn bp">＋ 追加</button>
-      </div>
-      <div class="fbar" id="fbar">
-        <div class="fc act" onclick="fsns('all',this)">すべて</div>
-        <div class="fc" onclick="fsns('ig',this)" style="border-color:#f9a8c4;color:var(--ig)">📸 Instagram</div>
-        <div class="fc" onclick="fsns('x',this)" style="border-color:#c0c0c0;color:var(--xp)">𝕏 X</div>
-        <div id="gchips" style="display:contents"></div>
-        <select class="ssel" onchange="fsort(this.value)">
-          <option value="date">新着順</option><option value="likes">いいね順</option><option value="eng">ENG率順</option>
-        </select>
-      </div>
-      <div id="fposts"></div>
+  <div class="page" id="page-feed"><div class="pi">
+    <div class="fbar">
+      <div class="fc act" onclick="fsns('all',this)">すべて</div>
+      <div class="fc" onclick="fsns('ig',this)" style="border-color:#f9a8c4;color:var(--ig)">📸 Instagram</div>
+      <div class="fc" onclick="fsns('x',this)" style="border-color:#c0c0c0;color:var(--xp)">𝕏 X</div>
+      <select class="ssel" onchange="fsort(this.value)">
+        <option value="date">新着順</option><option value="likes">いいね順</option><option value="eng">ENG率順</option>
+      </select>
     </div>
-  </div>
-  <!-- CALENDAR -->
-  <div class="page" id="page-calendar">
-    <div class="pi">
-      <div class="calh">
-        <button class="calnav" onclick="cnav(-1)">‹</button>
-        <div class="calmtitle" id="caltitle"></div>
-        <button class="calnav" onclick="cnav(1)">›</button>
-        <div class="calleg"><div class="legit"><div class="legdot" style="background:var(--ig)"></div>Instagram</div><div class="legit"><div class="legdot" style="background:var(--xp)"></div>X</div></div>
-      </div>
-      <div class="calgw">
-        <div class="caldow"><div>日</div><div>月</div><div>火</div><div>水</div><div>木</div><div>金</div><div>土</div></div>
-        <div class="calcells" id="calcells"></div>
-      </div>
-      <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap" id="calbreak"></div>
-    </div>
-  </div>
-  <!-- REPORT -->
-  <div class="page" id="page-report">
-    <div class="pi">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
-        <div><div style="font-family:'DM Serif Display',serif;font-size:22px">週次レポート</div><div style="font-size:12px;color:var(--g400);margin-top:2px" id="rdrange"></div></div>
-        <button class="btn bp" id="btnrep" onclick="genReport()">🤖 AIレポート生成</button>
-      </div>
-      <div class="rgrid">
-        <div class="rcard"><div class="rctitle">今週の投稿数</div><div class="rcval" id="rp-c">0</div><div class="rcsub">件</div></div>
-        <div class="rcard"><div class="rctitle">平均いいね</div><div class="rcval" id="rp-l">—</div><div class="rcsub">件/投稿</div></div>
-        <div class="rcard"><div class="rctitle">バズり投稿</div><div class="rcval" id="rp-h">0</div><div class="rcsub">件 🔥</div></div>
-      </div>
-      <div class="raisec">
-        <div class="raih"><div class="raititle">🤖 AIレポート</div><span style="font-size:12px;color:var(--g400)">上のボタンで生成</span></div>
-        <div class="raibody" id="raibody" style="color:var(--g400);font-style:italic">まだ生成されていません。投稿データを蓄積してから生成してください。</div>
-      </div>
-      <div class="tpsec"><div class="shead">TOP投稿 <span style="font-size:12px;font-weight:400;color:var(--g400)">ENG率順</span></div><div style="padding:14px;display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:12px" id="rtop"></div></div>
-    </div>
-  </div>
+    <div id="fposts"></div>
+  </div></div>
 </div>
 </div>
 <!-- MOBILE TABS -->
@@ -325,8 +183,6 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--off);color:var(--g90
   <button class="tabi act" onclick="go('dashboard',this)" data-page="dashboard"><div class="tabicon">📊</div><div class="tablbl">ホーム</div></button>
   <button class="tabi" onclick="go('feed',this)" data-page="feed"><div class="tabicon">🗂</div><div class="tablbl">一覧</div></button>
   <button class="tabi" onclick="openPostModal()" data-page=""><div class="tabicon" style="background:var(--ig);color:white;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;margin-top:-14px;box-shadow:0 4px 12px rgba(225,48,108,.4)">+</div><div class="tablbl">追加</div></button>
-  <button class="tabi" onclick="go('calendar',this)" data-page="calendar"><div class="tabicon">📅</div><div class="tablbl">カレンダー</div></button>
-  <button class="tabi" onclick="go('report',this)" data-page="report"><div class="tabicon">📈</div><div class="tablbl">レポート</div></button>
 </div>
 <!-- ADD POST MODAL -->
 <div class="movl" id="mpost">
@@ -334,10 +190,9 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--off);color:var(--g90
     <div class="mhandle"></div>
     <div class="mhead"><div class="mtitle">投稿を追加・AI分析</div><button onclick="cm('mpost')" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--g400)">×</button></div>
     <div class="mbody">
-      <div class="fg"><label class="fl">SNS</label><div class="sbtns"><button class="sbtn sig" id="psig" onclick="pSNS('ig')">📸 Instagram</button><button class="sbtn" id="psix" onclick="pSNS('x')">𝕏 X</button></div></div>
+      <div class="fg"><label class="fl">SNS</label><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><button onclick="pSNS('ig')" id="psig" style="padding:9px;border-radius:10px;border:1.5px solid var(--g200);background:var(--ig-l);border-color:var(--ig);color:var(--ig);cursor:pointer;font-family:inherit;font-size:13px;font-weight:500">📸 Instagram</button><button onclick="pSNS('x')" id="psix" style="padding:9px;border-radius:10px;border:1.5px solid var(--g200);background:white;color:var(--g700);cursor:pointer;font-family:inherit;font-size:13px;font-weight:500">𝕏 X</button></div></div>
       <div class="fg"><label class="fl">アカウント</label><select class="fi" id="pacc"></select></div>
-      <div class="fg"><label class="fl">投稿URL / キャプション</label><input class="fi" id="purl" placeholder="https://... またはキャプション" /><div class="hint">URLまたはキャプションを貼り付け</div></div>
-      <div class="fg"><label class="fl">サムネイル画像URL（任意）</label><input class="fi" id="pthumb" placeholder="https://..." oninput="prevThumb(this.value)" /><img id="tprev" style="width:72px;height:72px;border-radius:9px;object-fit:cover;border:2px solid var(--g200);margin-top:7px;display:none" /></div>
+      <div class="fg"><label class="fl">投稿URL / キャプション</label><input class="fi" id="purl" placeholder="https://... またはキャプション" /><div class="hint">URLまたはキャプション</div></div>
       <div class="fg"><label class="fl">投稿日</label><input class="fi" id="pdate" type="date" /></div>
       <div class="fr">
         <div class="fg"><label class="fl">❤️ いいね数</label><input class="fi" id="plikes" type="number" min="0" placeholder="0" /></div>
@@ -351,30 +206,35 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--off);color:var(--g90
     </div>
   </div>
 </div>
-<!-- ADD ACCOUNT MODAL -->
-<div class="movl" id="macc">
+<!-- GOOGLE SHEETS MODAL -->
+<div class="movl" id="mgsheets">
   <div class="modal">
     <div class="mhandle"></div>
-    <div class="mhead"><div class="mtitle">アカウントを追加</div><button onclick="cm('macc')" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--g400)">×</button></div>
+    <div class="mhead"><div class="mtitle">Google Sheetsから読み込み</div><button onclick="cm('mgsheets')" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--g400)">×</button></div>
     <div class="mbody">
-      <div class="fg"><label class="fl">SNS</label><div class="sbtns"><button class="sbtn sig" id="asig" onclick="aSNS('ig')">📸 Instagram</button><button class="sbtn" id="asix" onclick="aSNS('x')">𝕏 X</button></div></div>
-      <div class="fg"><label class="fl">アカウント名</label><input class="fi" id="anm" placeholder="@なしで入力" /></div>
-      <div class="fg"><label class="fl">フォロワー数（任意）</label><input class="fi" id="afw" type="number" min="0" placeholder="0" /></div>
-      <button class="btn bp" style="width:100%;justify-content:center;padding:11px" onclick="subAcc()">追加する</button>
+      <div class="fg"><label class="fl">スプレッドシートID</label><input class="fi" id="sheetid" placeholder="13Lewqy-CBvkPkLDVE1Y1zLAM_5acF2oRtH3XCPewsxc" /></div>
+      <div class="fg"><label class="fl">Google Sheets API キー</label><input class="fi" id="apikey" placeholder="AIzaSyC94Z0YFefUVkCdTD6b3xHPppi6XrLAosU" /></div>
+      <div class="fg"><label class="fl">アカウント</label><select class="fi" id="gascc"></select></div>
+      <button class="btn bp" style="width:100%;justify-content:center;padding:11px" id="blogsh" onclick="loadGoogleSheets()">🔄 読み込み開始</button>
     </div>
   </div>
 </div>
-<!-- DETAIL MODAL -->
-<div class="movl" id="mdetail">
-  <div class="modal" style="max-width:580px">
+<!-- FILE UPLOAD MODAL -->
+<div class="movl" id="mfile">
+  <div class="modal">
     <div class="mhandle"></div>
-    <div class="mhead"><div class="mtitle" id="dtitle">投稿詳細</div><button onclick="cm('mdetail')" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--g400)">×</button></div>
-    <div class="mbody" id="dbody"></div>
+    <div class="mhead"><div class="mtitle">URLファイルをアップロード</div><button onclick="cm('mfile')" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--g400)">×</button></div>
+    <div class="mbody">
+      <div class="fg"><label class="fl">テキストファイル選択</label><input type="file" id="furl" accept=".txt,.csv" style="width:100%;padding:8px;border:1.5px solid var(--g200);border-radius:10px;cursor:pointer;font-family:inherit" /></div>
+      <div class="hint">1行に1つのURLを入力したテキストファイル</div>
+      <div class="fg"><label class="fl">アカウント</label><select class="fi" id="fascc"></select></div>
+      <button class="btn bp" style="width:100%;justify-content:center;padding:11px" id="blogf" onclick="loadFile()">📁 ファイルを読み込み</button>
+    </div>
   </div>
 </div>
 <div class="toast" id="toast"></div>
 <script>
-const S={accounts:[],posts:[],pSNS:'ig',aSNS:'ig',fSNS:'all',fSort:'date',fGenre:'all',dAcc:'all',cY:new Date().getFullYear(),cM:new Date().getMonth(),page:'dashboard'};
+const S={accounts:[],posts:[],fSNS:'all',fSort:'date',page:'dashboard',pSNS:'ig'};
 const AC=['#e1306c','#c77dff','#0077b6','#f4a261','#2d6a4f','#e63946','#457b9d'];
 const GN={'料理・グルメ':{e:'🍽',c:'#f59e0b',bg:'#fffbeb'},'ライフスタイル':{e:'✨',c:'#10b981',bg:'#f0fdf4'},'商品・PR':{e:'🛍',c:'#06b6d4',bg:'#ecfeff'},'キャンペーン':{e:'🎁',c:'#e1306c',bg:'#fff0f4'},'エンタメ':{e:'🎭',c:'#a855f7',bg:'#faf5ff'},'教育・Tips':{e:'💡',c:'#f97316',bg:'#fff7ed'},'ビジネス':{e:'💼',c:'#64748b',bg:'#f8fafc'},'トレンド':{e:'🔥',c:'#ef4444',bg:'#fef2f2'},'その他':{e:'📌',c:'#9ca3af',bg:'#f9fafb'}};
 function ac(n){let h=0;for(let c of n)h+=c.charCodeAt(0);return AC[h%AC.length];}
@@ -387,97 +247,96 @@ let db,fs;
 window.addEventListener('fb-ready',async()=>{
   db=window._db;fs=window._fs;ss('syn');
   try{
-    fs.onSnapshot(fs.collection(db,'accounts'),snap=>{S.accounts=snap.docs.map(d=>({id:d.id,...d.data()}));renderSA();renderAS();updTS();if(S.page==='dashboard')renderDash();});
-    fs.onSnapshot(fs.query(fs.collection(db,'posts'),fs.orderBy('createdAt','desc')),snap=>{S.posts=snap.docs.map(d=>({id:d.id,...d.data()}));updTS();if(S.page==='feed')renderFeed();if(S.page==='dashboard')renderDash();if(S.page==='calendar')renderCal();if(S.page==='report')renderRep();ss('on');});
+    fs.onSnapshot(fs.collection(db,'accounts'),snap=>{S.accounts=snap.docs.map(d=>({id:d.id,...d.data()}));renderAS();});
+    fs.onSnapshot(fs.query(fs.collection(db,'posts'),fs.orderBy('createdAt','desc')),snap=>{S.posts=snap.docs.map(d=>({id:d.id,...d.data()}));if(S.page==='feed')renderFeed();ss('on');});
   }catch(e){ss('offline');console.error(e);}
 });
 async function saveA(a){await fs.setDoc(fs.doc(db,'accounts',a.id),a);}
 async function saveP(p){await fs.setDoc(fs.doc(db,'posts',p.id),p);}
-async function delF(col,id){await fs.deleteDoc(fs.doc(db,col,id));}
-const PT={'dashboard':'ダッシュボード','feed':'投稿一覧','calendar':'カレンダー','report':'週次レポート'};
 function go(id,el){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('act'));
   document.getElementById('page-'+id).classList.add('act');
   document.querySelectorAll('.sidebar .ni').forEach(n=>n.classList.remove('act'));
   document.querySelectorAll('.tabi').forEach(t=>t.classList.remove('act'));
   if(el){el.classList.add('act');const pg=el.dataset&&el.dataset.page||id;if(pg)document.querySelectorAll('[data-page="'+pg+'"]').forEach(x=>x.classList.add('act'));}
-  document.getElementById('tbtitle').textContent=PT[id]||id;
-  S.page=id;
-  if(id==='dashboard')renderDash();
-  if(id==='feed')renderFeed();
-  if(id==='calendar')renderCal();
-  if(id==='report')renderRep();
-}
-let aSNSst='ig';
-function aSNS(s){aSNSst=s;document.getElementById('asig').className='sbtn'+(s==='ig'?' sig':'');document.getElementById('asix').className='sbtn'+(s==='x'?' sx':'');}
-function openAccModal(){om('macc');document.getElementById('anm').value='';document.getElementById('afw').value='';}
-async function subAcc(){
-  const n=document.getElementById('anm').value.trim().replace(/^@/,'');
-  if(!n){toast('アカウント名を入力してください');return;}
-  const a={id:Date.now().toString(),name:n,sns:aSNSst,followers:parseInt(document.getElementById('afw').value)||0,addedAt:new Date().toISOString()};
-  ss('syn');await saveA(a);cm('macc');toast('@'+n+' を追加しました ✓');
-}
-async function delAcc(id){if(!confirm('削除しますか？'))return;ss('syn');await delF('accounts',id);toast('削除しました');}
-function renderSA(){
-  const el=document.getElementById('sacclist');
-  if(!S.accounts.length){el.innerHTML='<div style="padding:7px 10px;font-size:11px;color:var(--g400)">まだありません</div>';return;}
-  el.innerHTML=S.accounts.map(a=>`<div class="ami" onclick="fDash('${a.id}')"><div class="amav" style="background:${ac(a.name)}18;color:${ac(a.name)}">${a.name[0].toUpperCase()}</div><div class="amn">@${a.name}</div><div class="sdot2" style="background:${a.sns==='ig'?'var(--ig)':'var(--xp)'}"></div></div>`).join('');
+  document.getElementById('tbtitle').textContent=({dashboard:'ダッシュボード',feed:'投稿一覧'}[id]||id);
+  S.page=id;if(id==='feed')renderFeed();
 }
 function renderAS(){
-  const s=document.getElementById('pacc');
-  const f=S.accounts.filter(a=>a.sns===S.pSNS);
-  s.innerHTML='<option value="">選択してください</option>'+f.map(a=>`<option value="${a.id}">@${a.name}</option>`).join('');
+  const s=document.getElementById('pacc'),g=document.getElementById('gascc'),f=document.getElementById('fascc');
+  const o='<option value="">選択してください</option>'+S.accounts.filter(a=>a.sns===S.pSNS).map(a=>`<option value="${a.id}">@${a.name}</option>`).join('');
+  s.innerHTML=o;g.innerHTML=o;f.innerHTML=o;
 }
-let pSNSst='ig';
-function pSNS(s){pSNSst=s;S.pSNS=s;document.getElementById('psig').className='sbtn'+(s==='ig'?' sig':'');document.getElementById('psix').className='sbtn'+(s==='x'?' sx':'');renderAS();}
-function openPostModal(){om('mpost');['purl','pthumb','plikes','pcomments','psaves','pfollowers'].forEach(i=>document.getElementById(i).value='');document.getElementById('pdate').value=new Date().toISOString().split('T')[0];document.getElementById('tprev').style.display='none';renderAS();}
-function prevThumb(u){const i=document.getElementById('tprev');if(u){i.src=u;i.style.display='block';}else i.style.display='none';}
+function pSNS(s){S.pSNS=s;document.getElementById('psig').style.background=s==='ig'?'var(--ig-l)':'white';document.getElementById('psig').style.color=s==='ig'?'var(--ig)':'var(--g700)';document.getElementById('psix').style.background=s==='x'?'var(--xl)':'white';document.getElementById('psix').style.color=s==='x'?'var(--xp)':'var(--g700)';renderAS();}
+function openPostModal(){om('mpost');document.getElementById('pdate').value=new Date().toISOString().split('T')[0];}
+function openGoogleSheets(){om('mgsheets');}
+function openFileUpload(){om('mfile');}
 async function subPost(){
-  const url=document.getElementById('purl').value.trim();
-  const aid=document.getElementById('pacc').value;
-  if(!url){toast('URLまたはキャプションを入力してください');return;}
-  if(!aid){toast('アカウントを選択してください');return;}
+  const url=document.getElementById('purl').value.trim(),aid=document.getElementById('pacc').value;
+  if(!url||!aid){toast('入力を確認してください');return;}
   const acc=S.accounts.find(a=>a.id===aid);
-  const lk=parseInt(document.getElementById('plikes').value)||0;
-  const cm2=parseInt(document.getElementById('pcomments').value)||0;
-  const sv=parseInt(document.getElementById('psaves').value)||0;
-  const fw=parseInt(document.getElementById('pfollowers').value)||acc.followers||0;
-  const th=document.getElementById('pthumb').value.trim();
+  const lk=parseInt(document.getElementById('plikes').value)||0,cm2=parseInt(document.getElementById('pcomments').value)||0,sv=parseInt(document.getElementById('psaves').value)||0,fw=parseInt(document.getElementById('pfollowers').value)||acc.followers||0;
   const dt=document.getElementById('pdate').value||new Date().toISOString().split('T')[0];
-  const btn=document.getElementById('bsubp');
-  btn.disabled=true;btn.innerHTML='<div class="spin2"></div> AI分析中...';
+  const btn=document.getElementById('bsubp');btn.disabled=true;btn.innerHTML='<div class="spin2"></div> AI分析中...';
   const eng=fw>0?parseFloat(((lk+cm2+sv)/fw*100).toFixed(2)):0;
   try{
-    const pr=`SNSマーケターとして以下を分析しJSONのみ回答（バッククォート不要）。
+    const pr=`SNSマーケターとして分析しJSONのみ回答（バッククォート不要）。
 アカウント:@${acc.name}(${acc.sns==='ig'?'Instagram':'X'}) 内容:${url}
 いいね:${lk} コメント:${cm2} 保存:${sv} ENG:${eng}%
 {"genre":"料理・グルメ/ライフスタイル/商品・PR/キャンペーン/エンタメ/教育・Tips/ビジネス/トレンド/その他のいずれか","caption":"要約50字以内","analysis":"特徴100字以内","ideas":["アイデア1","アイデア2","アイデア3"],"hot":true/false}`;
     const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:800,messages:[{role:"user",content:pr}]})});
-    const d=await r.json();
-    const txt=d.content.map(i=>i.text||'').join('').replace(/```json|```/g,'').trim();
-    const p2=JSON.parse(txt);
-    const post={id:Date.now().toString(),accountId:aid,accountName:acc.name,sns:acc.sns,url,thumbUrl:th,likes:lk,comments:cm2,saves:sv,followers:fw,engRate:eng,genre:p2.genre||'その他',caption:p2.caption||url.slice(0,60),analysis:p2.analysis||'',ideas:p2.ideas||[],hot:!!p2.hot,date:dt,createdAt:new Date().toISOString(),deleted:false};
-    ss('syn');await saveP(post);cm('mpost');toast('✅ 分析完了・全端末に同期しました！');
+    const d=await r.json();const txt=d.content.map(i=>i.text||'').join('').replace(/```json|```/g,'').trim();const p2=JSON.parse(txt);
+    const post={id:Date.now().toString(),accountId:aid,accountName:acc.name,sns:acc.sns,url,likes:lk,comments:cm2,saves:sv,followers:fw,engRate:eng,genre:p2.genre||'その他',caption:p2.caption||url.slice(0,60),analysis:p2.analysis||'',ideas:p2.ideas||[],hot:!!p2.hot,date:dt,createdAt:new Date().toISOString(),deleted:false};
+    ss('syn');await saveP(post);cm('mpost');document.getElementById('purl').value='';toast('✅ 分析完了・全端末に同期しました！');
   }catch(e){toast('⚠️ エラーが発生しました');console.error(e);}
   btn.disabled=false;btn.innerHTML='✦ AI分析して保存';
 }
-function updTS(){
-  document.getElementById('tst').textContent=S.posts.length;
-  document.getElementById('tsa').textContent=S.accounts.length;
-  document.getElementById('nb-f').textContent=S.posts.length;
-  const we=S.posts.filter(p=>p.engRate>0);
-  document.getElementById('tse').textContent=we.length?(we.reduce((s,p)=>s+p.engRate,0)/we.length).toFixed(1)+'%':'—';
+async function loadGoogleSheets(){
+  const shid=document.getElementById('sheetid').value.trim(),akey=document.getElementById('apikey').value.trim(),aid=document.getElementById('gascc').value;
+  if(!shid||!akey||!aid){toast('入力を確認してください');return;}
+  const acc=S.accounts.find(a=>a.id===aid);
+  const btn=document.getElementById('blogsh');btn.disabled=true;btn.innerHTML='<div class="spin2"></div> 読み込み中...';
+  try{
+    const url=`https://sheets.googleapis.com/v4/spreadsheets/${shid}/values/A:A?key=${akey}`;
+    const r=await fetch(url);const d=await r.json();
+    if(!d.values){toast('スプレッドシートが見つかりません');btn.disabled=false;btn.innerHTML='🔄 読み込み開始';return;}
+    const urls=d.values.slice(1).map(v=>v[0]).filter(v=>v&&v.match(/^https?:\/\//));
+    toast(`${urls.length}個のURLを検出しました`);
+    for(const u of urls){
+      await new Promise(resolve=>setTimeout(resolve,500));
+      const eng=0,lk=0,cm2=0,sv=0,fw=acc.followers||0;
+      const pr=`SNSマーケターとして分析しJSONのみ回答。
+URL:${u} いいね:${lk} ENG率:${eng}%
+{"genre":"料理・グルメ/ライフスタイル/商品・PR/キャンペーン/エンタメ/教育・Tips/ビジネス/トレンド/その他のいずれか","caption":"内容から推測50字","analysis":"想定される内容","ideas":["アイデア1","アイデア2","アイデア3"],"hot":false}`;
+      try{const res=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:600,messages:[{role:"user",content:pr}]})});const dt=await res.json();const txt=dt.content.map(i=>i.text||'').join('').replace(/```json|```/g,'').trim();const p2=JSON.parse(txt);const post={id:Date.now().toString(),accountId:aid,accountName:acc.name,sns:acc.sns,url:u,likes:0,comments:0,saves:0,followers:fw,engRate:0,genre:p2.genre||'その他',caption:p2.caption||'Google Sheetsから読み込み',analysis:p2.analysis||'',ideas:p2.ideas||[],hot:false,date:new Date().toISOString().split('T')[0],createdAt:new Date().toISOString(),deleted:false};await saveP(post);}catch(e){console.error(e);}}
+    cm('mgsheets');toast(`✅ ${urls.length}個のURLを分析・保存しました！`);document.getElementById('sheetid').value='';document.getElementById('apikey').value='';
+  }catch(e){toast('⚠️ エラーが発生しました');console.error(e);}
+  btn.disabled=false;btn.innerHTML='🔄 読み込み開始';
+}
+async function loadFile(){
+  const f=document.getElementById('furl').files[0],aid=document.getElementById('fascc').value;
+  if(!f||!aid){toast('ファイルとアカウントを選択してください');return;}
+  const acc=S.accounts.find(a=>a.id===aid);
+  const btn=document.getElementById('blogf');btn.disabled=true;btn.innerHTML='<div class="spin2"></div> 読み込み中...';
+  try{
+    const txt=await f.text();const urls=txt.split('\n').map(l=>l.trim()).filter(l=>l.match(/^https?:\/\//));
+    toast(`${urls.length}個のURLを検出しました`);
+    for(const u of urls){
+      await new Promise(resolve=>setTimeout(resolve,500));
+      const pr=`SNSマーケターとして分析しJSONのみ回答。URL:${u} {"genre":"料理・グルメ/ライフスタイル/商品・PR/キャンペーン/エンタメ/教育・Tips/ビジネス/トレンド/その他のいずれか","caption":"内容から推測50字","analysis":"想定される内容","ideas":["アイデア1","アイデア2","アイデア3"],"hot":false}`;
+      try{const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:600,messages:[{role:"user",content:pr}]})});const d=await r.json();const txt2=d.content.map(i=>i.text||'').join('').replace(/```json|```/g,'').trim();const p2=JSON.parse(txt2);const post={id:Date.now().toString(),accountId:aid,accountName:acc.name,sns:acc.sns,url:u,likes:0,comments:0,saves:0,followers:acc.followers||0,engRate:0,genre:p2.genre||'その他',caption:p2.caption||'ファイルから読み込み',analysis:p2.analysis||'',ideas:p2.ideas||[],hot:false,date:new Date().toISOString().split('T')[0],createdAt:new Date().toISOString(),deleted:false};await saveP(post);}catch(e){console.error(e);}}
+    cm('mfile');toast(`✅ ${urls.length}個のURLを分析・保存しました！`);document.getElementById('furl').value='';
+  }catch(e){toast('⚠️ ファイル読み込みエラー');console.error(e);}
+  btn.disabled=false;btn.innerHTML='📁 ファイルを読み込み';
 }
 function fn(n){if(n>=10000)return (n/10000).toFixed(1)+'万';if(n>=1000)return (n/1000).toFixed(1)+'K';return (n||0).toString();}
 function card(p){
-  const g=GN[p.genre]||GN['その他'],col=ac(p.accountName);
-  const mx=Math.max(...S.posts.filter(x=>x.engRate>0).map(x=>x.engRate),1);
-  const ep=Math.min((p.engRate/mx)*100,100);
+  const g=GN[p.genre]||GN['その他'];const col=ac(p.accountName);
+  const mx=Math.max(...S.posts.filter(x=>x.engRate>0).map(x=>x.engRate),1);const ep=Math.min((p.engRate/mx)*100,100);
   const dt=new Date(p.date||p.createdAt).toLocaleDateString('ja-JP',{month:'numeric',day:'numeric'});
   return `<div class="pcard ${p.sns==='ig'?'igc':'xc'}" onclick="openDetail('${p.id}')">
     <div class="pthumb">
-      ${p.thumbUrl?`<img src="${p.thumbUrl}" alt="" onerror="this.style.display='none'">`:''}
-      <div class="pph" ${p.thumbUrl?'style="display:none"':''}><div class="pi2">${p.sns==='ig'?'📸':'𝕏'}</div><div class="pt">${p.sns==='ig'?'Instagram':'X'}</div></div>
+      <div class="pph"><div class="pi2">${p.sns==='ig'?'📸':'𝕏'}</div><div class="pt">${p.sns==='ig'?'Instagram':'X'}</div></div>
       <span class="tsnsbadge ${p.sns==='ig'?'big':'bx'}">${p.sns==='ig'?'IG':'X'}</span>
       ${p.hot?'<span class="hotfl">🔥 HOT</span>':''}
       ${p.deleted?'<div class="delf">削除済み</div>':''}
@@ -494,136 +353,19 @@ function card(p){
     </div>
   </div>`;
 }
-function fsns(v,el){S.fSNS=v;document.querySelectorAll('#fbar .fc:not(.gc)').forEach(c=>c.classList.remove('act'));el.classList.add('act');renderFeed();}
-function fg2(g,el){S.fGenre=g;document.querySelectorAll('.gc').forEach(c=>c.classList.remove('act'));if(el)el.classList.add('act');renderFeed();}
+function fsns(v,el){S.fSNS=v;document.querySelectorAll('.fbar .fc').forEach(c=>c.classList.remove('act'));el.classList.add('act');renderFeed();}
 function fsort(v){S.fSort=v;renderFeed();}
 function renderFeed(){
-  const ug=[...new Set(S.posts.map(p=>p.genre))];
-  document.getElementById('gchips').innerHTML=
-    `<div class="fc gc ${S.fGenre==='all'?'act':''}" onclick="fg2('all',this)" style="margin-left:6px">全ジャンル</div>`+
-    ug.map(g=>{const gc=GN[g]||GN['その他'];return `<div class="fc gc ${S.fGenre===g?'act':''}" onclick="fg2('${g}',this)">${gc.e} ${g}</div>`;}).join('');
   let ps=[...S.posts];
   if(S.fSNS!=='all')ps=ps.filter(p=>p.sns===S.fSNS);
-  if(S.fGenre!=='all')ps=ps.filter(p=>p.genre===S.fGenre);
   if(S.fSort==='likes')ps.sort((a,b)=>b.likes-a.likes);
   else if(S.fSort==='eng')ps.sort((a,b)=>b.engRate-a.engRate);
   else ps.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
   const el=document.getElementById('fposts');
-  el.innerHTML=ps.length?`<div class="pgrid">${ps.map(card).join('')}</div>`:
-    `<div class="empty"><div style="font-size:40px;opacity:.4;margin-bottom:10px">🔍</div><div style="font-family:'DM Serif Display',serif;font-size:18px;color:var(--g700);margin-bottom:5px">投稿がありません</div><div style="font-size:13px">条件を変えるか新しい投稿を追加してください</div></div>`;
+  el.innerHTML=ps.length?`<div class="pgrid">${ps.map(card).join('')}</div>`:'<div style="text-align:center;padding:40px;color:var(--g400)"><div style="font-size:32px;opacity:.4;margin-bottom:10px">🔍</div><div style="font-size:16px">投稿がありません</div></div>';
 }
-function fDash(id){S.dAcc=id;document.querySelectorAll('.dab').forEach(b=>b.classList.remove('act'));const b=document.querySelector(`.dab[data-id="${id}"]`);if(b)b.classList.add('act');renderDash();}
-function renderDash(){
-  document.getElementById('dsel').innerHTML=
-    `<button class="dab ${S.dAcc==='all'?'act':''}" onclick="fDash('all')">🗂 全アカウント</button>`+
-    S.accounts.map(a=>{const col=ac(a.name);return `<button class="dab ${S.dAcc===a.id?'act':''} ${a.sns==='x'?'xa':''}" data-id="${a.id}" onclick="fDash('${a.id}')"><div style="width:18px;height:18px;border-radius:50%;background:${col}18;color:${col};display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700">${a.name[0].toUpperCase()}</div>@${a.name}</button>`;}).join('');
-  let ps=S.posts;
-  if(S.dAcc!=='all')ps=ps.filter(p=>p.accountId===S.dAcc);
-  document.getElementById('ds-t').textContent=ps.length;
-  const wl=ps.filter(p=>p.likes>0);
-  document.getElementById('ds-l').textContent=wl.length?(wl.reduce((s,p)=>s+p.likes,0)/wl.length).toFixed(0):'—';
-  const we=ps.filter(p=>p.engRate>0);
-  document.getElementById('ds-e').textContent=we.length?(we.reduce((s,p)=>s+p.engRate,0)/we.length).toFixed(1)+'%':'—';
-  document.getElementById('ds-h').textContent=ps.filter(p=>p.hot).length;
-  const gc={};for(const p of ps)gc[p.genre]=(gc[p.genre]||0)+1;
-  const mg=Math.max(...Object.values(gc),1);
-  document.getElementById('dgbars').innerHTML=Object.keys(gc).length?
-    Object.entries(gc).sort((a,b)=>b[1]-a[1]).map(([g,c])=>{const gn=GN[g]||GN['その他'];return `<div class="gbr"><div class="gbl">${gn.e} ${g}</div><div class="gbt"><div class="gbf" style="width:${(c/mg*100).toFixed(0)}%;background:${gn.c}"></div></div><div class="gbc">${c}</div></div>`;}).join(''):
-    '<div style="color:var(--g400);font-size:13px">投稿を追加するとジャンル分布が表示されます</div>';
-  const rp=ps.slice(0,6);
-  document.getElementById('drp').innerHTML=rp.length?rp.map(card).join(''):
-    `<div class="empty" style="padding:30px"><div style="font-size:30px;opacity:.4;margin-bottom:8px">📊</div><div style="font-family:'DM Serif Display',serif;font-size:16px;color:var(--g700);margin-bottom:4px">まだ投稿がありません</div><div style="font-size:13px">「投稿追加」から記録してください</div></div>`;
-  document.getElementById('amg').innerHTML=S.accounts.map(a=>{
-    const col=ac(a.name);const ap=S.posts.filter(p=>p.accountId===a.id);const al=ap.filter(p=>p.likes>0);
-    return `<div class="amc ${a.sns==='x'?'xa':''}" onclick="fDash('${a.id}')">
-      <div class="amch"><div class="amcav" style="background:${col}18;color:${col}">${a.name[0].toUpperCase()}</div>
-      <div><div style="font-weight:600;font-size:13px">@${a.name}</div><div style="font-size:10px;color:var(--g400)">${a.sns==='ig'?'📸 Instagram':'𝕏 X'}</div></div>
-      <button onclick="event.stopPropagation();delAcc('${a.id}')" style="margin-left:auto;background:none;border:none;cursor:pointer;color:var(--g300);font-size:16px">×</button></div>
-      <div class="amcs"><div class="amc-stat" style="text-align:center"><div class="amcsv">${ap.length}</div><div class="amcsl">投稿</div></div><div style="text-align:center"><div class="amcsv">${al.length?(al.reduce((s,p)=>s+p.likes,0)/al.length).toFixed(0):'—'}</div><div class="amcsl">平均いいね</div></div><div style="text-align:center"><div class="amcsv">${ap.filter(p=>p.hot).length}</div><div class="amcsl">HOT</div></div></div>
-    </div>`;
-  }).join('');
-}
-function cnav(d){S.cM+=d;if(S.cM>11){S.cM=0;S.cY++;}if(S.cM<0){S.cM=11;S.cY--;}renderCal();}
-function renderCal(){
-  const y=S.cY,m=S.cM;
-  document.getElementById('caltitle').textContent=y+'年'+(m+1)+'月';
-  const fd=new Date(y,m,1).getDay(),ld=new Date(y,m+1,0).getDate(),tod=new Date();
-  const bd={};
-  for(const p of S.posts){const d=new Date(p.date||p.createdAt);if(d.getFullYear()===y&&d.getMonth()===m){const k=d.getDate();if(!bd[k])bd[k]=[];bd[k].push(p);}}
-  let h='';const pl=new Date(y,m,0).getDate();
-  for(let i=fd-1;i>=0;i--)h+=`<div class="calcel om"><div class="cdn">${pl-i}</div></div>`;
-  for(let d=1;d<=ld;d++){
-    const it=tod.getFullYear()===y&&tod.getMonth()===m&&tod.getDate()===d;
-    const ps=bd[d]||[];const sh=ps.slice(0,3);const mo=ps.length-3;
-    h+=`<div class="calcel${it?' tod':''}"><div class="cdn">${d}</div><div class="calposts">${sh.map(p=>`<div class="cpd ${p.sns==='ig'?'igd':'xd'}" onclick="openDetail('${p.id}')" title="@${p.accountName}">@${p.accountName}</div>`).join('')}${mo>0?`<div class="cmore">+${mo}</div>`:''}</div></div>`;
-  }
-  const rem=(fd+ld)%7===0?0:7-(fd+ld)%7;
-  for(let d=1;d<=rem;d++)h+=`<div class="calcel om"><div class="cdn">${d}</div></div>`;
-  document.getElementById('calcells').innerHTML=h;
-  const mp=S.posts.filter(p=>{const d=new Date(p.date||p.createdAt);return d.getFullYear()===y&&d.getMonth()===m;});
-  document.getElementById('calbreak').innerHTML=S.accounts.map(a=>{
-    const col=ac(a.name);const cnt=mp.filter(p=>p.accountId===a.id).length;
-    return `<div style="background:white;border:1px solid var(--g200);border-radius:9px;padding:9px 13px;display:flex;align-items:center;gap:7px"><div style="width:22px;height:22px;border-radius:50%;background:${col}18;color:${col};display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700">${a.name[0].toUpperCase()}</div><span style="font-size:12px;font-weight:600">@${a.name}</span><span style="font-family:'DM Sans',sans-serif;font-weight:700;font-size:13px">${cnt}</span><span style="font-size:11px;color:var(--g400)">件</span></div>`;
-  }).join('');
-}
-function renderRep(){
-  const now=new Date(),wa=new Date(now);wa.setDate(wa.getDate()-7);
-  document.getElementById('rdrange').textContent=wa.toLocaleDateString('ja-JP',{month:'numeric',day:'numeric'})+' 〜 '+now.toLocaleDateString('ja-JP',{month:'numeric',day:'numeric'});
-  const wp=S.posts.filter(p=>{const d=new Date(p.createdAt);return d>=wa&&d<=now;});
-  document.getElementById('rp-c').textContent=wp.length;
-  const wl=wp.filter(p=>p.likes>0);
-  document.getElementById('rp-l').textContent=wl.length?(wl.reduce((s,p)=>s+p.likes,0)/wl.length).toFixed(0):'—';
-  document.getElementById('rp-h').textContent=wp.filter(p=>p.hot).length;
-  const top=[...S.posts].sort((a,b)=>b.engRate-a.engRate).slice(0,6);
-  document.getElementById('rtop').innerHTML=top.length?top.map(card).join(''):'<div style="color:var(--g400);font-size:13px;padding:12px">投稿を追加するとTOP投稿が表示されます</div>';
-}
-async function genReport(){
-  if(!S.posts.length){toast('投稿を追加してから生成してください');return;}
-  const btn=document.getElementById('btnrep');btn.disabled=true;btn.innerHTML='<div class="spin2"></div> 生成中...';
-  document.getElementById('raibody').innerHTML='<div class="tdots"><span></span><span></span><span></span></div>';
-  const sum=S.posts.slice(0,30).map(p=>`[${p.accountName}/${p.sns}] ${p.genre} いいね:${p.likes} ENG:${p.engRate}% HOT:${p.hot}`).join('\n');
-  try{
-    const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1200,messages:[{role:"user",content:`SNSマーケターとして以下の競合投稿データを分析し日本語でレポートを作成してください。\n${sum}\n①バズりやすいジャンル・傾向②ENG率が高い投稿の共通点③自社アカウントへの示唆④企画アイデア3〜5個（<span class="itag">タグ</span>形式）\nHTMLフォーマット（p,strong,ul,li,spanのみ）で作成`}]})});
-    const d=await r.json();document.getElementById('raibody').innerHTML=d.content.map(i=>i.text||'').join('');
-  }catch(e){document.getElementById('raibody').innerHTML='<span style="color:var(--ig)">エラーが発生しました</span>';}
-  btn.disabled=false;btn.innerHTML='🤖 AIレポート生成';
-}
-function openDetail(id){
-  const p=S.posts.find(x=>x.id===id);if(!p)return;
-  const g=GN[p.genre]||GN['その他'],col=ac(p.accountName);
-  document.getElementById('dtitle').textContent='@'+p.accountName+'の投稿';
-  document.getElementById('dbody').innerHTML=`
-    ${p.thumbUrl?`<img src="${p.thumbUrl}" style="width:100%;max-height:280px;object-fit:cover;border-radius:10px;margin-bottom:14px;background:var(--g100)" onerror="this.style.display='none'" />`:''}
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
-      <div style="width:34px;height:34px;border-radius:50%;background:${col}18;color:${col};display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700">${p.accountName[0].toUpperCase()}</div>
-      <div><div style="font-weight:700">@${p.accountName}</div><div style="font-size:11px;color:var(--g400)">${p.sns==='ig'?'Instagram':'X'} · ${new Date(p.date||p.createdAt).toLocaleDateString('ja-JP')}</div></div>
-      <div style="background:${g.bg};color:${g.c};font-size:10px;font-weight:600;padding:2px 7px;border-radius:20px;margin-left:auto">${g.e} ${p.genre}</div>
-      ${p.hot?'<span style="background:#fff1ee;color:#ff4500;font-size:10px;font-weight:700;padding:2px 6px;border-radius:5px">🔥</span>':''}
-    </div>
-    ${p.deleted?'<div style="background:#fef2f2;border:1px solid #fecaca;color:#dc2626;border-radius:8px;padding:8px 12px;font-size:12px;margin-bottom:12px">⚠️ SNS上では削除済みですが、データは保持されています</div>':''}
-    ${p.url?`<div style="margin-bottom:10px"><a href="${p.url}" target="_blank" style="color:var(--ig);font-size:12px;word-break:break-all">${p.url}</a></div>`:''}
-    <div style="background:var(--g50);border-radius:10px;padding:11px 13px;margin-bottom:12px;font-size:13px;line-height:1.7;color:var(--g600)">${p.caption}</div>
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:14px">
-      ${[['❤️','いいね',p.likes],['💬','コメント',p.comments],['🔖','保存',p.saves||0],['📈','ENG率',p.engRate?p.engRate+'%':'—']].map(([ic,lb,vl])=>`
-        <div style="background:var(--g50);border-radius:9px;padding:10px;text-align:center">
-          <div style="font-size:17px">${ic}</div>
-          <div style="font-family:'DM Sans',sans-serif;font-weight:700;font-size:15px;margin-top:3px">${typeof vl==='number'?fn(vl):vl}</div>
-          <div style="font-size:10px;color:var(--g400);margin-top:1px">${lb}</div>
-        </div>`).join('')}
-    </div>
-    ${p.analysis?`<div style="background:var(--g50);border-radius:10px;padding:11px 13px;margin-bottom:12px"><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--g400);margin-bottom:5px">📊 分析</div><div style="font-size:13px;line-height:1.7;color:var(--g600)">${p.analysis}</div></div>`:''}
-    ${p.ideas&&p.ideas.length?`<div style="background:var(--ig-l);border:1px solid var(--ig-m);border-radius:10px;padding:12px;margin-bottom:14px"><div style="font-size:10px;font-weight:700;color:var(--ig);text-transform:uppercase;letter-spacing:1px;margin-bottom:7px">💡 企画アイデア</div>${p.ideas.map(i=>`<div style="display:flex;gap:6px;margin-bottom:5px;font-size:13px;color:var(--g700);line-height:1.5"><span style="color:var(--ig);font-weight:700">→</span>${i}</div>`).join('')}</div>`:''}
-    <div style="display:flex;gap:7px">
-      <button onclick="togDel('${p.id}')" style="flex:1;padding:9px;border-radius:9px;border:1.5px solid var(--g200);background:white;cursor:pointer;font-size:13px;font-family:inherit;color:var(--g600)">${p.deleted?'✓ 削除済みを解除':'🗑 削除済みにする'}</button>
-      <button onclick="remPost('${p.id}')" style="padding:9px 14px;border-radius:9px;border:1.5px solid #fecaca;background:#fef2f2;color:#dc2626;cursor:pointer;font-size:13px;font-family:inherit">完全削除</button>
-    </div>`;
-  om('mdetail');
-}
-async function togDel(id){const p=S.posts.find(x=>x.id===id);if(!p)return;p.deleted=!p.deleted;ss('syn');await saveP(p);cm('mdetail');toast(p.deleted?'削除済みにしました（データは保持）':'削除済みを解除しました');}
-async function remPost(id){if(!confirm('完全に削除しますか？'))return;ss('syn');await delF('posts',id);cm('mdetail');toast('投稿を削除しました');}
-document.getElementById('pdate').value=new Date().toISOString().split('T')[0];
-renderCal();renderRep();
+function openDetail(id){const p=S.posts.find(x=>x.id===id);if(!p)return;alert(`@${p.accountName}\n${p.genre}\nいいね: ${p.likes}\nENG率: ${p.engRate}%`);}
+document.getElementById('pdate').value=new Date().toISOString().split('T')[0];pSNS('ig');
 </script>
 </body>
 </html>
