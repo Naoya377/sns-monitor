@@ -194,6 +194,24 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--off);color:var(--g90
 .icard-memo{font-size:11px;color:var(--g500);margin-top:4px;line-height:1.5;}
 .ilist{display:flex;flex-direction:column;gap:10px;}
 @media(max-width:767px){.mobile-tabs button[data-page="ideas"]{flex:.8;}}
+.xcard{background:white;border-radius:var(--r);border:1.5px solid var(--g200);padding:16px;margin-bottom:12px;transition:border-color .15s;}
+.xcard:hover{border-color:#0f0f0f;}
+.xcard-top{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;}
+.xcard-body{flex:1;min-width:0;}
+.xcard-text{font-size:13px;line-height:1.6;color:var(--g900);margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.xcard-date{font-size:11px;color:var(--g400);margin-bottom:6px;}
+.xcard-url{font-size:11px;color:#0f0f0f;text-decoration:none;font-weight:500;}
+.xcard-url:hover{text-decoration:underline;}
+.xmetrics{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:6px;margin-top:10px;}
+.xmet{background:var(--g50);border-radius:8px;padding:6px 8px;text-align:center;}
+.xmet-v{font-family:'DM Sans',sans-serif;font-weight:700;font-size:13px;line-height:1;}
+.xmet-l{font-size:9px;color:var(--g400);margin-top:2px;}
+.xeng-bar{display:flex;align-items:center;gap:8px;margin-top:8px;padding-top:8px;border-top:1px solid var(--g100);}
+.xeng-label{font-size:11px;color:var(--g500);width:90px;flex-shrink:0;}
+.xeng-track{flex:1;height:5px;background:var(--g100);border-radius:3px;overflow:hidden;}
+.xeng-fill{height:100%;border-radius:3px;background:var(--xp);}
+.xeng-val{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;width:40px;text-align:right;}
+@media(max-width:767px){.xmetrics{grid-template-columns:repeat(3,1fr);}}
 </style>
 </head>
 <body>
@@ -208,6 +226,8 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--off);color:var(--g90
     <button class="ni" onclick="go('calendar',this)"><span class="nicon">📅</span>カレンダー</button>
     <button class="ni" onclick="go('report',this)"><span class="nicon">📈</span>週次レポート</button>
     <button class="ni" onclick="go('ideas',this)"><span class="nicon">💡</span>ネタストック<span class="nbadge" id="nb-i">0</span></button>
+    <button class="ni" onclick="go('xstats',this)"><span class="nicon">𝕏</span>X投稿分析<span class="nbadge" id="nb-x">0</span></button>
+    <button class="ni" onclick="go('igstats',this)"><span class="nicon">📸</span>IG投稿分析<span class="nbadge" id="nb-ig2">0</span></button>
   </div>
   <div class="sacc">
     <div class="nlbl" style="padding:0 8px;margin-bottom:6px">監視アカウント</div>
@@ -299,6 +319,91 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--off);color:var(--g90
     </div>
     <div id="ideas-list"></div>
   </div></div>
+  <div class="page" id="page-xstats"><div class="pi">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px">
+      <div><div style="font-family:'DM Serif Display',serif;font-size:22px">𝕏 投稿分析</div><div style="font-size:12px;color:var(--g400);margin-top:2px">Googleスプレッドシートから自分のX投稿データを表示・分析</div></div>
+      <button class="btn bp" onclick="refreshXStats()">🔄 更新</button>
+    </div>
+    <div id="xstats-setup" style="background:white;border-radius:var(--r);border:1.5px dashed var(--g200);padding:20px;margin-bottom:20px">
+      <div style="font-weight:700;font-size:14px;margin-bottom:8px">📋 スプレッドシートURL設定</div>
+      <div style="font-size:12px;color:var(--g500);margin-bottom:10px;line-height:1.7">
+        X投稿データのスプレッドシートをCSVで公開してURLを貼り付けてください。<br>
+        <strong>列の順番：</strong> 投稿月 / 投稿日付 / 記録日付 / テキスト / 画像 / 投稿URL / フォロワー数 / ENG率(対IMP) / ENG率(対フォロワー) / ENG総数 / Imp / RP / 返信 / いいね数 / ブックマーク / プロフィールクリック / リンククリック / 詳細クリック / フォロー / 再生数
+      </div>
+      <div style="font-size:11px;background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:10px 12px;margin-bottom:12px;color:#92400e">
+        ⚙️ 公開手順：スプレッドシートを開く → ファイル → ウェブに公開 → 「CSV」形式 → リンクをコピー
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <input class="fi" id="xsurl" placeholder="https://docs.google.com/spreadsheets/d/e/.../pub?output=csv" style="flex:1;min-width:200px" />
+        <button class="btn bp" onclick="saveXsUrl()">保存・読み込み</button>
+      </div>
+    </div>
+    <div id="xstats-summary" style="display:none;margin-bottom:20px">
+      <div class="dsr" style="grid-template-columns:repeat(auto-fill,minmax(140px,1fr))">
+        <div class="ds"><div class="dsl">総投稿数</div><div class="dsv" id="xs-total">0</div><div class="dssub">件</div></div>
+        <div class="ds"><div class="dsl">平均Imp</div><div class="dsv" id="xs-imp">—</div><div class="dssub">件/投稿</div></div>
+        <div class="ds"><div class="dsl">平均ENG率</div><div class="dsv" id="xs-eng">—</div><div class="dssub">対IMP</div></div>
+        <div class="ds"><div class="dsl">平均いいね</div><div class="dsv" id="xs-likes">—</div><div class="dssub">件/投稿</div></div>
+        <div class="ds"><div class="dsl">平均RP</div><div class="dsv" id="xs-rp">—</div><div class="dssub">件/投稿</div></div>
+        <div class="ds"><div class="dsl">平均ブクマ</div><div class="dsv" id="xs-bm">—</div><div class="dssub">件/投稿</div></div>
+      </div>
+    </div>
+    <div class="fbar" id="xstats-filters" style="display:none;flex-wrap:wrap;gap:6px">
+      <div class="fc act" onclick="xFilt('all',this)" style="font-size:11px">すべて</div>
+      <div id="xmonth-chips" style="display:contents"></div>
+      <select class="ssel" id="xsort" onchange="renderXStats()" style="margin-left:auto">
+        <option value="date">新着順</option>
+        <option value="imp">Imp順</option>
+        <option value="eng">ENG率順</option>
+        <option value="likes">いいね順</option>
+        <option value="bm">ブクマ順</option>
+      </select>
+    </div>
+    <div id="xstats-list"></div>
+  </div></div>
+  <div class="page" id="page-igstats"><div class="pi">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px">
+      <div><div style="font-family:'DM Serif Display',serif;font-size:22px">📸 IG投稿分析</div><div style="font-size:12px;color:var(--g400);margin-top:2px">Googleスプレッドシートから自分のInstagram投稿データを表示・分析</div></div>
+      <button class="btn bp" onclick="refreshIgStats()">🔄 更新</button>
+    </div>
+    <div id="igstats-setup" style="background:white;border-radius:var(--r);border:1.5px dashed var(--g200);padding:20px;margin-bottom:20px">
+      <div style="font-weight:700;font-size:14px;margin-bottom:8px">📋 スプレッドシートURL設定</div>
+      <div style="font-size:12px;color:var(--g500);margin-bottom:10px;line-height:1.7">
+        Instagram投稿データのスプレッドシートをCSVで公開してURLを貼り付けてください。<br>
+        <strong>列の順番：</strong> 投稿月 / 日付 / AD / 素材 / カテゴリ / 車種 / 詳細URL / フォロワー数 / リーチ率 / ENG率(対フォロワー) / ENG(+保存)率(対フォロワー) / ENG(+保存)率(対リーチ) / ENG総数 / 閲覧数 / フォロー中% / 非フォロー% / リーチ / フィード / プロフィール / ストーリーズ / リールタブ / 発見 / 検索 / 平均再生時間 / フォロー数 / いいね数 / コメント数 / 保存 / 再投稿 / プロフアクセス / 男性 / 女性 / 日本 / 海外TOP2 / 年齢13-17 / 18-24 / 25-34 / 35-44 / 45-54 / 55-64 / 65+
+      </div>
+      <div style="font-size:11px;background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:10px 12px;margin-bottom:12px;color:#92400e">
+        ⚙️ 公開手順：スプレッドシートを開く → ファイル → ウェブに公開 → 「CSV」形式 → リンクをコピー
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <input class="fi" id="igsurl" placeholder="https://docs.google.com/spreadsheets/d/e/.../pub?output=csv" style="flex:1;min-width:200px" />
+        <button class="btn bp" onclick="saveIgsUrl()">保存・読み込み</button>
+      </div>
+    </div>
+    <div id="igstats-summary" style="display:none;margin-bottom:20px">
+      <div class="dsr" style="grid-template-columns:repeat(auto-fill,minmax(140px,1fr))">
+        <div class="ds"><div class="dsl">総投稿数</div><div class="dsv" id="igs-total">0</div><div class="dssub">件</div></div>
+        <div class="ds"><div class="dsl">平均リーチ</div><div class="dsv" id="igs-reach">—</div><div class="dssub">件/投稿</div></div>
+        <div class="ds"><div class="dsl">平均ENG率</div><div class="dsv" id="igs-eng">—</div><div class="dssub">対フォロワー</div></div>
+        <div class="ds"><div class="dsl">平均いいね</div><div class="dsv" id="igs-likes">—</div><div class="dssub">件/投稿</div></div>
+        <div class="ds"><div class="dsl">平均保存</div><div class="dsv" id="igs-save">—</div><div class="dssub">件/投稿</div></div>
+        <div class="ds"><div class="dsl">平均フォロー</div><div class="dsv" id="igs-follow">—</div><div class="dssub">件/投稿</div></div>
+      </div>
+    </div>
+    <div class="fbar" id="igstats-filters" style="display:none;flex-wrap:wrap;gap:6px">
+      <div class="fc act" onclick="igFilt('all',this)" style="font-size:11px">すべて</div>
+      <div id="igmonth-chips" style="display:contents"></div>
+      <div id="igcat-chips" style="display:contents"></div>
+      <select class="ssel" id="igsort" onchange="renderIgStats()" style="margin-left:auto">
+        <option value="date">新着順</option>
+        <option value="reach">リーチ順</option>
+        <option value="eng">ENG率順</option>
+        <option value="likes">いいね順</option>
+        <option value="save">保存順</option>
+      </select>
+    </div>
+    <div id="igstats-list"></div>
+  </div></div>
   <div class="page" id="page-report"><div class="pi">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
       <div><div style="font-family:'DM Serif Display',serif;font-size:22px">週次レポート</div><div style="font-size:12px;color:var(--g400);margin-top:2px" id="rdrange"></div></div>
@@ -324,6 +429,8 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--off);color:var(--g90
   <button class="tabi" onclick="go('calendar',this)" data-page="calendar"><div class="tabicon">📅</div><div class="tablbl">カレンダー</div></button>
   <button class="tabi" onclick="go('report',this)" data-page="report"><div class="tabicon">📈</div><div class="tablbl">レポート</div></button>
   <button class="tabi" onclick="go('ideas',this)" data-page="ideas"><div class="tabicon">💡</div><div class="tablbl">ネタ</div></button>
+  <button class="tabi" onclick="go('xstats',this)" data-page="xstats"><div class="tabicon">𝕏</div><div class="tablbl">X分析</div></button>
+  <button class="tabi" onclick="go('igstats',this)" data-page="igstats"><div class="tabicon">📸</div><div class="tablbl">IG分析</div></button>
 </div>
 <div class="movl" id="mpost"><div class="modal"><div class="mhandle"></div><div class="mhead"><div class="mtitle">投稿を追加・AI分析</div><button onclick="cm('mpost')" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--g400)">×</button></div><div class="mbody"><div class="fg"><label class="fl">SNS</label><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><button onclick="pSNS('ig')" id="psig" style="padding:9px;border-radius:10px;border:1.5px solid var(--g200);background:var(--ig-l);border-color:var(--ig);color:var(--ig);cursor:pointer;font-family:inherit;font-size:13px;font-weight:500">📸 Instagram</button><button onclick="pSNS('x')" id="psix" style="padding:9px;border-radius:10px;border:1.5px solid var(--g200);background:white;color:var(--g700);cursor:pointer;font-family:inherit;font-size:13px;font-weight:500">𝕏 X</button></div></div><div class="fg"><label class="fl">アカウント</label><select class="fi" id="pacc"></select></div><div class="fg"><label class="fl">投稿URL / キャプション</label><input class="fi" id="purl" placeholder="https://... またはキャプション" /><div class="hint">URLまたはキャプション</div></div><div class="fg"><label class="fl">投稿日</label><input class="fi" id="pdate" type="date" /></div><div class="fr"><div class="fg"><label class="fl">❤️ いいね数</label><input class="fi" id="plikes" type="number" min="0" placeholder="0" /></div><div class="fg"><label class="fl">💬 コメント数</label><input class="fi" id="pcomments" type="number" min="0" placeholder="0" /></div></div><div class="fr"><div class="fg"><label class="fl">🔖 保存数</label><input class="fi" id="psaves" type="number" min="0" placeholder="0" /></div><div class="fg"><label class="fl">👥 フォロワー数</label><input class="fi" id="pfollowers" type="number" min="0" placeholder="0" /></div></div><button class="btn bp" style="width:100%;justify-content:center;padding:11px" id="bsubp" onclick="subPost()">✦ AI分析して保存</button></div></div></div>
 <div class="movl" id="macc"><div class="modal"><div class="mhandle"></div><div class="mhead"><div class="mtitle">アカウントを追加</div><button onclick="cm('macc')" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--g400)">×</button></div><div class="mbody"><div class="fg"><label class="fl">SNS</label><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><button onclick="aSNS('ig')" id="asig" style="padding:9px;border-radius:10px;border:1.5px solid var(--g200);background:var(--ig-l);border-color:var(--ig);color:var(--ig);cursor:pointer;font-family:inherit;font-size:13px;font-weight:500">📸 Instagram</button><button onclick="aSNS('x')" id="asix" style="padding:9px;border-radius:10px;border:1.5px solid var(--g200);background:white;color:var(--g700);cursor:pointer;font-family:inherit;font-size:13px;font-weight:500">𝕏 X</button></div></div><div class="fg"><label class="fl">アカウント名</label><input class="fi" id="anm" placeholder="@なしで入力" /></div><div class="fg"><label class="fl">フォロワー数（任意）</label><input class="fi" id="afw" type="number" min="0" placeholder="0" /></div><button class="btn bp" style="width:100%;justify-content:center;padding:11px" onclick="subAcc()">追加する</button></div></div></div>
@@ -381,7 +488,24 @@ function saveGsUrl(){const u=document.getElementById('gsurl').value.trim();if(!u
 async function loadIdeas(url){if(!url)return;const el=document.getElementById('ideas-list');el.innerHTML='<div style="text-align:center;padding:30px;color:var(--g400)"><div class="tdots"><span></span><span></span><span></span></div><div style="margin-top:10px;font-size:13px">スプレッドシートを読み込み中...</div></div>';try{const r=await fetch(url);if(!r.ok)throw new Error('fetch failed');const txt=await r.text();const rows=txt.trim().split('\n').map(l=>{const cells=[];let cur='',inQ=false;for(let i=0;i<l.length;i++){const c=l[i];if(c==='"'){inQ=!inQ;}else if(c===','&&!inQ){cells.push(cur.trim());cur='';}else{cur+=c;}}cells.push(cur.trim());return cells;});const header=rows[0].map(h=>h.toLowerCase());const ci={cat:Math.max(header.findIndex(h=>h.includes('カテゴリ')||h.includes('category')),0),title:Math.max(header.findIndex(h=>h.includes('タイトル')||h.includes('title')||h.includes('メモ')||h.includes('memo')),1),url:Math.max(header.findIndex(h=>h.includes('url')),2),sns:Math.max(header.findIndex(h=>h.includes('sns')),3),note:header.findIndex(h=>h.includes('追加')||h.includes('note')||h.includes('備考'))};IDEAS=rows.slice(1).filter(r=>r.length>1&&r.some(c=>c)).map(r=>({cat:r[ci.cat]||'その他',title:r[ci.title]||'',url:r[ci.url]||'',sns:(r[ci.sns]||'').toLowerCase(),note:ci.note>=0?(r[ci.note]||''):''}));document.getElementById('nb-i').textContent=IDEAS.length;document.getElementById('ideas-filters').style.display='flex';renderIdeas();toast(`✅ ${IDEAS.length}件を読み込みました`);}catch(e){el.innerHTML='<div style="text-align:center;padding:30px;color:#ef4444"><div style="font-size:28px;margin-bottom:8px">⚠️</div><div style="font-size:14px;font-weight:600">読み込みエラー</div><div style="font-size:12px;color:var(--g500);margin-top:6px">URLが正しいか、シートが「ウェブに公開」されているか確認してください</div></div>';toast('⚠️ 読み込みに失敗しました');console.error(e);}}
 function renderIdeas(){const el=document.getElementById('ideas-list');let items=IDEAS;if(IDEAS_CAT!=='all')items=items.filter(i=>i.cat===IDEAS_CAT||(IDEAS_CAT==='その他'&&i.cat!=='競合アカウント'&&i.cat!=='ネタストック'));if(!items.length){el.innerHTML='<div style="text-align:center;padding:40px;color:var(--g400)"><div style="font-size:32px;opacity:.4;margin-bottom:10px">📭</div><div>このカテゴリにはまだありません</div></div>';return;}const catIcon={'競合アカウント':'🔍','ネタストック':'💡'};const catColor={'競合アカウント':{'bg':'#fff0f4','c':'var(--ig)'},'ネタストック':{'bg':'#fffbeb','c':'#d97706'}};el.innerHTML='<div class="ilist">'+items.map(it=>{const ci=catIcon[it.cat]||'📌';const cc=catColor[it.cat]||{bg:'#f9fafb',c:'#6b7280'};const snsLabel=it.sns==='ig'?'📸 Instagram':it.sns==='x'||it.sns==='twitter'?'𝕏 X':'';const hasUrl=it.url&&it.url.match(/^https?:\/\//);return `<div class="icard" onclick="${hasUrl?'window.open(\''+it.url.replace(/'/g,"\\'")+"','_blank')":''}">\n<div class="icard-icon">${ci}</div>\n<div class="icard-body">\n<div class="icard-title">${it.title||it.url||'（タイトルなし）'}</div>\n${hasUrl?`<a class="icard-url" href="${it.url}" target="_blank" onclick="event.stopPropagation()">${it.url}</a>`:'<span style="font-size:11px;color:var(--g300)">URLなし</span>'}\n<div class="icard-meta"><span class="itag2" style="background:${cc.bg};color:${cc.c}">${it.cat||'その他'}</span>${snsLabel?`<span class="itag2" style="background:var(--g100);color:var(--g600)">${snsLabel}</span>`:''}</div>\n${it.note?`<div class="icard-memo">${it.note}</div>`:''}\n</div>\n</div>`;}).join('')+'</div>';}
 function refreshIdeas(){const u=localStorage.getItem('gsUrl');if(!u){toast('まずURLを設定してください');return;}loadIdeas(u);}
-window.addEventListener('fb-ready',()=>{const saved=localStorage.getItem('gsUrl');if(saved){document.getElementById('gsurl').value=saved;loadIdeas(saved);}},{once:true});
+window.addEventListener('fb-ready',()=>{const saved=localStorage.getItem('gsUrl');if(saved){document.getElementById('gsurl').value=saved;loadIdeas(saved);const sx=localStorage.getItem('xsUrl');if(sx)document.getElementById('xsurl').value=sx;const si=localStorage.getItem('igsUrl');if(si)document.getElementById('igsurl').value=si;}},{once:true});
+const PT_IG={'igstats':'IG投稿分析'};Object.assign(PT,PT_IG);
+let IGPOSTS=[],IGFILT='all',IGFILT_CAT='all';
+function igFilt(v,el){IGFILT=v;IGFILT_CAT='all';document.querySelectorAll('#igstats-filters .fc').forEach(x=>x.classList.remove('act'));if(el)el.classList.add('act');renderIgStats();}
+function igFiltCat(v,el){IGFILT_CAT=v;document.querySelectorAll('#igcat-chips .fc').forEach(x=>x.classList.remove('act'));if(el)el.classList.add('act');renderIgStats();}
+function saveIgsUrl(){const u=document.getElementById('igsurl').value.trim();if(!u){toast('URLを入力してください');return;}localStorage.setItem('igsUrl',u);loadIgStats(u);}
+function refreshIgStats(){const u=localStorage.getItem('igsUrl');if(!u){toast('まずURLを設定してください');return;}loadIgStats(u);}
+async function loadIgStats(url){if(!url)return;const el=document.getElementById('igstats-list');el.innerHTML='<div style="text-align:center;padding:30px;color:var(--g400)"><div class="tdots"><span></span><span></span><span></span></div><div style="margin-top:10px;font-size:13px">読み込み中...</div></div>';try{const r=await fetch(url);if(!r.ok)throw new Error();const txt=await r.text();const rows=txt.trim().split('\n').map(l=>{const cells=[];let cur='',inQ=false;for(let i=0;i<l.length;i++){const c=l[i];if(c==='"'){inQ=!inQ;}else if(c===','&&!inQ){cells.push(cur.trim());cur='';}else cur+=c;}cells.push(cur.trim());return cells;});IGPOSTS=rows.slice(1).filter(r=>r.length>3&&r.some(c=>c)).map(r=>({month:r[0]||'',date:r[1]||'',ad:r[2]||'',material:r[3]||'',category:r[4]||'',car:r[5]||'',url:r[6]||'',followers:xNum(r[7]),reachRate:xNum(r[8]),engFol:xNum(r[9]),engSaveFol:xNum(r[10]),engSaveReach:xNum(r[11]),engTotal:xNum(r[12]),views:xNum(r[13]),folPct:xNum(r[14]),nonFolPct:xNum(r[15]),reach:xNum(r[16]),feed:xNum(r[17]),profile:xNum(r[18]),stories:xNum(r[19]),reelTab:xNum(r[20]),explore:xNum(r[21]),search:xNum(r[22]),avgPlay:xNum(r[23]),follow:xNum(r[24]),likes:xNum(r[25]),comments:xNum(r[26]),saves:xNum(r[27]),repost:xNum(r[28]),profileAccess:xNum(r[29]),male:xNum(r[30]),female:xNum(r[31]),japan:xNum(r[32]),overseas:r[33]||'',age1317:xNum(r[34]),age1824:xNum(r[35]),age2534:xNum(r[36]),age3544:xNum(r[37]),age4554:xNum(r[38]),age5564:xNum(r[39]),age65:xNum(r[40])}));document.getElementById('nb-ig2').textContent=IGPOSTS.length;const months=[...new Set(IGPOSTS.map(p=>p.month).filter(m=>m))];const cats=[...new Set(IGPOSTS.map(p=>p.category).filter(c=>c))];document.getElementById('igmonth-chips').innerHTML=months.map(m=>`<div class="fc" onclick="igFilt('${m}',this)" style="font-size:11px">${m}</div>`).join('');document.getElementById('igcat-chips').innerHTML=cats.map(c=>`<div class="fc" onclick="igFiltCat('${c}',this)" style="font-size:11px;border-color:#f9a8c4;color:var(--ig)">${c}</div>`).join('');document.getElementById('igstats-filters').style.display='flex';document.getElementById('igstats-summary').style.display='block';renderIgStats();toast(`✅ ${IGPOSTS.length}件を読み込みました`);}catch(e){el.innerHTML='<div style="text-align:center;padding:30px;color:#ef4444"><div style="font-size:28px;margin-bottom:8px">⚠️</div><div style="font-size:14px;font-weight:600">読み込みエラー</div><div style="font-size:12px;color:var(--g500);margin-top:6px">URLとシートの公開設定を確認してください</div></div>';toast('⚠️ 読み込みに失敗しました');console.error(e);}}
+function renderIgStats(){let items=IGPOSTS;if(IGFILT!=='all')items=items.filter(p=>p.month===IGFILT);if(IGFILT_CAT!=='all')items=items.filter(p=>p.category===IGFILT_CAT);const sort=document.getElementById('igsort')?.value||'date';if(sort==='reach')items=[...items].sort((a,b)=>b.reach-a.reach);else if(sort==='eng')items=[...items].sort((a,b)=>b.engFol-a.engFol);else if(sort==='likes')items=[...items].sort((a,b)=>b.likes-a.likes);else if(sort==='save')items=[...items].sort((a,b)=>b.saves-a.saves);const avgR=items.filter(p=>p.reach>0);document.getElementById('igs-total').textContent=items.length;document.getElementById('igs-reach').textContent=avgR.length?xFmt(avgR.reduce((s,p)=>s+p.reach,0)/avgR.length):'—';const avgE=items.filter(p=>p.engFol>0);document.getElementById('igs-eng').textContent=avgE.length?(avgE.reduce((s,p)=>s+p.engFol,0)/avgE.length).toFixed(2)+'%':'—';const avgL=items.filter(p=>p.likes>0);document.getElementById('igs-likes').textContent=avgL.length?xFmt(avgL.reduce((s,p)=>s+p.likes,0)/avgL.length):'—';const avgS=items.filter(p=>p.saves>0);document.getElementById('igs-save').textContent=avgS.length?xFmt(avgS.reduce((s,p)=>s+p.saves,0)/avgS.length):'—';const avgF=items.filter(p=>p.follow>0);document.getElementById('igs-follow').textContent=avgF.length?xFmt(avgF.reduce((s,p)=>s+p.follow,0)/avgF.length):'—';const maxR=Math.max(...items.map(p=>p.reach),1);const maxE=Math.max(...items.map(p=>p.engFol),1);const el=document.getElementById('igstats-list');if(!items.length){el.innerHTML='<div style="text-align:center;padding:40px;color:var(--g400)"><div style="font-size:32px;opacity:.4;margin-bottom:10px">📭</div><div>このフィルターにはデータがありません</div></div>';return;}el.innerHTML=items.map(p=>{const hasUrl=p.url.match(/^https?:\/\//);const rPct=Math.min((p.reach/maxR)*100,100);const ePct=Math.min((p.engFol/maxE)*100,100);const ageData=[[p.age1317,'13-17'],[p.age1824,'18-24'],[p.age2534,'25-34'],[p.age3544,'35-44'],[p.age4554,'45-54'],[p.age5564,'55-64'],[p.age65,'65+']].filter(a=>a[0]>0);return `<div class="xcard" style="border-color:${p.ad?'#fde68a':'var(--g200)'}"><div style="display:flex;align-items:center;gap:6px;margin-bottom:8px;flex-wrap:wrap"><div style="width:28px;height:28px;border-radius:50%;background:var(--ig);color:white;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0">📸</div><div style="font-size:11px;color:var(--g400)">${p.date}${p.month?' · '+p.month:''}</div>${p.ad?'<span style="font-size:10px;font-weight:700;background:#fef9c3;color:#92400e;padding:2px 7px;border-radius:10px">AD</span>':''}${p.category?`<span style="font-size:10px;font-weight:600;background:var(--ig-l);color:var(--ig);padding:2px 7px;border-radius:10px">${p.category}</span>`:''}${p.car?`<span style="font-size:10px;color:var(--g500);padding:2px 6px;border-radius:10px;background:var(--g100)">${p.car}</span>`:''}</div>${p.material?`<div style="font-size:13px;line-height:1.6;color:var(--g700);margin-bottom:6px">${p.material}</div>`:''}<div class="xmetrics"><div class="xmet"><div class="xmet-v">${xFmt(p.reach)}</div><div class="xmet-l">リーチ</div></div><div class="xmet"><div class="xmet-v">${xFmt(p.likes)}</div><div class="xmet-l">いいね</div></div><div class="xmet"><div class="xmet-v">${xFmt(p.saves)}</div><div class="xmet-l">保存</div></div><div class="xmet"><div class="xmet-v">${xFmt(p.comments)}</div><div class="xmet-l">コメント</div></div><div class="xmet"><div class="xmet-v">${xFmt(p.follow)}</div><div class="xmet-l">フォロー</div></div><div class="xmet"><div class="xmet-v">${xFmt(p.engTotal)}</div><div class="xmet-l">ENG総数</div></div>${p.views>0?`<div class="xmet"><div class="xmet-v">${xFmt(p.views)}</div><div class="xmet-l">閲覧数</div></div>`:''}<div class="xmet"><div class="xmet-v">${xFmt(p.profileAccess)}</div><div class="xmet-l">プロフ</div></div>${p.avgPlay>0?`<div class="xmet"><div class="xmet-v">${p.avgPlay}s</div><div class="xmet-l">平均再生</div></div>`:''}</div><div class="xeng-bar" style="margin-top:10px"><div class="xeng-label">リーチ</div><div class="xeng-track"><div class="xeng-fill" style="width:${rPct}%;background:var(--ig)"></div></div><div class="xeng-val">${xFmt(p.reach)}</div></div><div class="xeng-bar"><div class="xeng-label">ENG率(対フォロワー)</div><div class="xeng-track"><div class="xeng-fill" style="width:${ePct}%;background:var(--ig)"></div></div><div class="xeng-val">${p.engFol}%</div></div>${p.male||p.female?`<div style="display:flex;gap:8px;margin-top:8px;padding-top:8px;border-top:1px solid var(--g100)"><div style="flex:1;text-align:center;font-size:11px;color:var(--g500)">👨 男性 <strong style="color:var(--g900)">${p.male}%</strong></div><div style="flex:1;text-align:center;font-size:11px;color:var(--g500)">👩 女性 <strong style="color:var(--g900)">${p.female}%</strong></div></div>`:''}</div>`;}).join('');}
+const PT_X={'xstats':'X投稿分析'};Object.assign(PT,PT_X);
+let XPOSTS=[],XFILT='all';
+function xFilt(v,el){XFILT=v;document.querySelectorAll('#xstats-filters .fc').forEach(x=>x.classList.remove('act'));if(el)el.classList.add('act');renderXStats();}
+function saveXsUrl(){const u=document.getElementById('xsurl').value.trim();if(!u){toast('URLを入力してください');return;}localStorage.setItem('xsUrl',u);loadXStats(u);}
+function refreshXStats(){const u=localStorage.getItem('xsUrl');if(!u){toast('まずURLを設定してください');return;}loadXStats(u);}
+function xNum(v){const n=parseFloat((v+'').replace(/,/g,''));return isNaN(n)?0:n;}
+function xFmt(n){if(n>=10000)return(n/10000).toFixed(1)+'万';if(n>=1000)return(n/1000).toFixed(1)+'K';return Math.round(n).toString();}
+async function loadXStats(url){if(!url)return;const el=document.getElementById('xstats-list');el.innerHTML='<div style="text-align:center;padding:30px;color:var(--g400)"><div class="tdots"><span></span><span></span><span></span></div><div style="margin-top:10px;font-size:13px">読み込み中...</div></div>';try{const r=await fetch(url);if(!r.ok)throw new Error();const txt=await r.text();const rows=txt.trim().split('\n').map(l=>{const cells=[];let cur='',inQ=false;for(let i=0;i<l.length;i++){const c=l[i];if(c==='"'){inQ=!inQ;}else if(c===','&&!inQ){cells.push(cur.trim());cur='';}else cur+=c;}cells.push(cur.trim());return cells;});XPOSTS=rows.slice(1).filter(r=>r.length>3&&r.some(c=>c)).map(r=>({month:r[0]||'',date:r[1]||'',recDate:r[2]||'',text:r[3]||'',image:r[4]||'',url:r[5]||'',followers:xNum(r[6]),engImp:xNum(r[7]),engFol:xNum(r[8]),engTotal:xNum(r[9]),imp:xNum(r[10]),rp:xNum(r[11]),reply:xNum(r[12]),likes:xNum(r[13]),bookmark:xNum(r[14]),profileClick:xNum(r[15]),linkClick:xNum(r[16]),detailClick:xNum(r[17]),follow:xNum(r[18]),play:xNum(r[19])}));document.getElementById('nb-x').textContent=XPOSTS.length;const months=[...new Set(XPOSTS.map(p=>p.month).filter(m=>m))];document.getElementById('xmonth-chips').innerHTML=months.map(m=>`<div class="fc" onclick="xFilt('${m}',this)" style="font-size:11px">${m}</div>`).join('');document.getElementById('xstats-filters').style.display='flex';document.getElementById('xstats-summary').style.display='block';renderXStats();toast(`✅ ${XPOSTS.length}件を読み込みました`);}catch(e){el.innerHTML='<div style="text-align:center;padding:30px;color:#ef4444"><div style="font-size:28px;margin-bottom:8px">⚠️</div><div style="font-size:14px;font-weight:600">読み込みエラー</div><div style="font-size:12px;color:var(--g500);margin-top:6px">URLとシートの公開設定を確認してください</div></div>';toast('⚠️ 読み込みに失敗しました');console.error(e);}}
+function renderXStats(){let items=XPOSTS;if(XFILT!=='all')items=items.filter(p=>p.month===XFILT);const sort=document.getElementById('xsort')?.value||'date';if(sort==='imp')items=[...items].sort((a,b)=>b.imp-a.imp);else if(sort==='eng')items=[...items].sort((a,b)=>b.engImp-a.engImp);else if(sort==='likes')items=[...items].sort((a,b)=>b.likes-a.likes);else if(sort==='bm')items=[...items].sort((a,b)=>b.bookmark-a.bookmark);const avgImp=items.filter(p=>p.imp>0);document.getElementById('xs-total').textContent=items.length;document.getElementById('xs-imp').textContent=avgImp.length?xFmt(avgImp.reduce((s,p)=>s+p.imp,0)/avgImp.length):'—';const avgEng=items.filter(p=>p.engImp>0);document.getElementById('xs-eng').textContent=avgEng.length?(avgEng.reduce((s,p)=>s+p.engImp,0)/avgEng.length).toFixed(2)+'%':'—';const avgL=items.filter(p=>p.likes>0);document.getElementById('xs-likes').textContent=avgL.length?xFmt(avgL.reduce((s,p)=>s+p.likes,0)/avgL.length):'—';const avgR=items.filter(p=>p.rp>0);document.getElementById('xs-rp').textContent=avgR.length?xFmt(avgR.reduce((s,p)=>s+p.rp,0)/avgR.length):'—';const avgB=items.filter(p=>p.bookmark>0);document.getElementById('xs-bm').textContent=avgB.length?xFmt(avgB.reduce((s,p)=>s+p.bookmark,0)/avgB.length):'—';const maxImp=Math.max(...items.map(p=>p.imp),1);const maxEng=Math.max(...items.map(p=>p.engImp),1);const el=document.getElementById('xstats-list');if(!items.length){el.innerHTML='<div style="text-align:center;padding:40px;color:var(--g400)"><div style="font-size:32px;opacity:.4;margin-bottom:10px">📭</div><div>このフィルターにはデータがありません</div></div>';return;}el.innerHTML=items.map(p=>{const hasUrl=p.url.match(/^https?:\/\//);const impPct=Math.min((p.imp/maxImp)*100,100);const engPct=Math.min((p.engImp/maxEng)*100,100);return `<div class="xcard"><div class="xcard-top"><div style="width:32px;height:32px;border-radius:50%;background:#0f0f0f;color:white;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">𝕏</div><div class="xcard-body"><div class="xcard-date">${p.date}${p.month?' · '+p.month:''}</div><div class="xcard-text">${p.text||'（テキストなし）'}</div>${hasUrl?`<a class="xcard-url" href="${p.url}" target="_blank">🔗 投稿を見る</a>`:''}</div></div><div class="xmetrics"><div class="xmet"><div class="xmet-v">${xFmt(p.imp)}</div><div class="xmet-l">Imp</div></div><div class="xmet"><div class="xmet-v">${xFmt(p.likes)}</div><div class="xmet-l">いいね</div></div><div class="xmet"><div class="xmet-v">${xFmt(p.rp)}</div><div class="xmet-l">RP</div></div><div class="xmet"><div class="xmet-v">${xFmt(p.bookmark)}</div><div class="xmet-l">ブクマ</div></div><div class="xmet"><div class="xmet-v">${xFmt(p.reply)}</div><div class="xmet-l">返信</div></div><div class="xmet"><div class="xmet-v">${xFmt(p.follow)}</div><div class="xmet-l">フォロー</div></div>${p.play>0?`<div class="xmet"><div class="xmet-v">${xFmt(p.play)}</div><div class="xmet-l">再生</div></div>`:''}<div class="xmet"><div class="xmet-v">${xFmt(p.profileClick)}</div><div class="xmet-l">プロフ</div></div><div class="xmet"><div class="xmet-v">${xFmt(p.engTotal)}</div><div class="xmet-l">ENG総数</div></div></div>${p.engImp>0||p.imp>0?`<div class="xeng-bar"><div class="xeng-label">Imp</div><div class="xeng-track"><div class="xeng-fill" style="width:${impPct}%"></div></div><div class="xeng-val">${xFmt(p.imp)}</div></div><div class="xeng-bar"><div class="xeng-label">ENG率(対IMP)</div><div class="xeng-track"><div class="xeng-fill" style="width:${engPct}%"></div></div><div class="xeng-val">${p.engImp}%</div></div>`:''}</div>`;}).join('');}
 </script>
 </body>
 </html>
