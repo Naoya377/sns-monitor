@@ -182,6 +182,18 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--off);color:var(--g90
 .tdots span:nth-child(2){animation-delay:.2s;}.tdots span:nth-child(3){animation-delay:.4s;}
 @keyframes td{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-5px);opacity:1}}
 ::-webkit-scrollbar{width:4px;height:4px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:var(--g200);border-radius:2px;}
+.icard{background:white;border-radius:var(--r);border:1.5px solid var(--g200);padding:14px 16px;display:flex;align-items:flex-start;gap:12px;transition:all .15s;cursor:pointer;}
+.icard:hover{border-color:var(--ig);box-shadow:0 4px 16px rgba(225,48,108,.08);}
+.icard-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;background:var(--g50);}
+.icard-body{flex:1;min-width:0;}
+.icard-title{font-weight:600;font-size:14px;color:var(--g900);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.icard-url{font-size:11px;color:var(--ig);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none;}
+.icard-url:hover{text-decoration:underline;}
+.icard-meta{display:flex;align-items:center;gap:6px;margin-top:6px;flex-wrap:wrap;}
+.itag2{font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;}
+.icard-memo{font-size:11px;color:var(--g500);margin-top:4px;line-height:1.5;}
+.ilist{display:flex;flex-direction:column;gap:10px;}
+@media(max-width:767px){.mobile-tabs button[data-page="ideas"]{flex:.8;}}
 </style>
 </head>
 <body>
@@ -195,6 +207,7 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--off);color:var(--g90
     <button class="ni" onclick="go('feed',this)"><span class="nicon">🗂</span>投稿一覧<span class="nbadge" id="nb-f">0</span></button>
     <button class="ni" onclick="go('calendar',this)"><span class="nicon">📅</span>カレンダー</button>
     <button class="ni" onclick="go('report',this)"><span class="nicon">📈</span>週次レポート</button>
+    <button class="ni" onclick="go('ideas',this)"><span class="nicon">💡</span>ネタストック<span class="nbadge" id="nb-i">0</span></button>
   </div>
   <div class="sacc">
     <div class="nlbl" style="padding:0 8px;margin-bottom:6px">監視アカウント</div>
@@ -258,6 +271,34 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--off);color:var(--g90
     <div class="calgw"><div class="caldow"><div>日</div><div>月</div><div>火</div><div>水</div><div>木</div><div>金</div><div>土</div></div><div class="calcells" id="calcells"></div></div>
     <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap" id="calbreak"></div>
   </div></div>
+  <div class="page" id="page-ideas"><div class="pi">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px">
+      <div><div style="font-family:'DM Serif Display',serif;font-size:22px">ネタストック</div><div style="font-size:12px;color:var(--g400);margin-top:2px">Googleスプレッドシートから競合・ネタURLを表示</div></div>
+      <button class="btn bp" onclick="refreshIdeas()">🔄 更新</button>
+    </div>
+    <div id="ideas-setup" style="background:white;border-radius:var(--r);border:1.5px dashed var(--g200);padding:20px;margin-bottom:20px">
+      <div style="font-weight:700;font-size:14px;margin-bottom:8px">📋 スプレッドシートURL設定</div>
+      <div style="font-size:12px;color:var(--g500);margin-bottom:12px;line-height:1.7">
+        GoogleスプレッドシートをCSV形式で公開して、そのURLを貼り付けてください。<br>
+        <strong>シートの列構成（1行目はヘッダー）：</strong><br>
+        A列：カテゴリ（競合アカウント / ネタストック）　B列：タイトル・メモ　C列：URL　D列：SNS（ig / x）　E列：追加メモ
+      </div>
+      <div style="font-size:11px;background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:10px 12px;margin-bottom:12px;color:#92400e">
+        ⚙️ 公開手順：スプレッドシートを開く → ファイル → ウェブに公開 → 「CSV」形式を選択 → リンクをコピー
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <input class="fi" id="gsurl" placeholder="https://docs.google.com/spreadsheets/d/e/.../pub?output=csv" style="flex:1;min-width:200px" />
+        <button class="btn bp" onclick="saveGsUrl()">保存・読み込み</button>
+      </div>
+    </div>
+    <div class="fbar" id="ideas-filters" style="display:none">
+      <div class="fc act" onclick="iCat('all',this)">すべて</div>
+      <div class="fc" onclick="iCat('競合アカウント',this)">🔍 競合アカウント</div>
+      <div class="fc" onclick="iCat('ネタストック',this)">💡 ネタストック</div>
+      <div class="fc" onclick="iCat('その他',this)">📌 その他</div>
+    </div>
+    <div id="ideas-list"></div>
+  </div></div>
   <div class="page" id="page-report"><div class="pi">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
       <div><div style="font-family:'DM Serif Display',serif;font-size:22px">週次レポート</div><div style="font-size:12px;color:var(--g400);margin-top:2px" id="rdrange"></div></div>
@@ -282,6 +323,7 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--off);color:var(--g90
   <button class="tabi" onclick="openPostModal()" data-page=""><div class="tabicon" style="background:var(--ig);color:white;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;margin-top:-14px;box-shadow:0 4px 12px rgba(225,48,108,.4)">+</div><div class="tablbl">追加</div></button>
   <button class="tabi" onclick="go('calendar',this)" data-page="calendar"><div class="tabicon">📅</div><div class="tablbl">カレンダー</div></button>
   <button class="tabi" onclick="go('report',this)" data-page="report"><div class="tabicon">📈</div><div class="tablbl">レポート</div></button>
+  <button class="tabi" onclick="go('ideas',this)" data-page="ideas"><div class="tabicon">💡</div><div class="tablbl">ネタ</div></button>
 </div>
 <div class="movl" id="mpost"><div class="modal"><div class="mhandle"></div><div class="mhead"><div class="mtitle">投稿を追加・AI分析</div><button onclick="cm('mpost')" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--g400)">×</button></div><div class="mbody"><div class="fg"><label class="fl">SNS</label><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><button onclick="pSNS('ig')" id="psig" style="padding:9px;border-radius:10px;border:1.5px solid var(--g200);background:var(--ig-l);border-color:var(--ig);color:var(--ig);cursor:pointer;font-family:inherit;font-size:13px;font-weight:500">📸 Instagram</button><button onclick="pSNS('x')" id="psix" style="padding:9px;border-radius:10px;border:1.5px solid var(--g200);background:white;color:var(--g700);cursor:pointer;font-family:inherit;font-size:13px;font-weight:500">𝕏 X</button></div></div><div class="fg"><label class="fl">アカウント</label><select class="fi" id="pacc"></select></div><div class="fg"><label class="fl">投稿URL / キャプション</label><input class="fi" id="purl" placeholder="https://... またはキャプション" /><div class="hint">URLまたはキャプション</div></div><div class="fg"><label class="fl">投稿日</label><input class="fi" id="pdate" type="date" /></div><div class="fr"><div class="fg"><label class="fl">❤️ いいね数</label><input class="fi" id="plikes" type="number" min="0" placeholder="0" /></div><div class="fg"><label class="fl">💬 コメント数</label><input class="fi" id="pcomments" type="number" min="0" placeholder="0" /></div></div><div class="fr"><div class="fg"><label class="fl">🔖 保存数</label><input class="fi" id="psaves" type="number" min="0" placeholder="0" /></div><div class="fg"><label class="fl">👥 フォロワー数</label><input class="fi" id="pfollowers" type="number" min="0" placeholder="0" /></div></div><button class="btn bp" style="width:100%;justify-content:center;padding:11px" id="bsubp" onclick="subPost()">✦ AI分析して保存</button></div></div></div>
 <div class="movl" id="macc"><div class="modal"><div class="mhandle"></div><div class="mhead"><div class="mtitle">アカウントを追加</div><button onclick="cm('macc')" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--g400)">×</button></div><div class="mbody"><div class="fg"><label class="fl">SNS</label><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><button onclick="aSNS('ig')" id="asig" style="padding:9px;border-radius:10px;border:1.5px solid var(--g200);background:var(--ig-l);border-color:var(--ig);color:var(--ig);cursor:pointer;font-family:inherit;font-size:13px;font-weight:500">📸 Instagram</button><button onclick="aSNS('x')" id="asix" style="padding:9px;border-radius:10px;border:1.5px solid var(--g200);background:white;color:var(--g700);cursor:pointer;font-family:inherit;font-size:13px;font-weight:500">𝕏 X</button></div></div><div class="fg"><label class="fl">アカウント名</label><input class="fi" id="anm" placeholder="@なしで入力" /></div><div class="fg"><label class="fl">フォロワー数（任意）</label><input class="fi" id="afw" type="number" min="0" placeholder="0" /></div><button class="btn bp" style="width:100%;justify-content:center;padding:11px" onclick="subAcc()">追加する</button></div></div></div>
@@ -331,6 +373,15 @@ function renderCal(){const y=S.cY,m=S.cM;document.getElementById('caltitle').tex
 function renderRep(){const now=new Date(),wa=new Date(now);wa.setDate(wa.getDate()-7);document.getElementById('rdrange').textContent=wa.toLocaleDateString('ja-JP',{month:'numeric',day:'numeric'})+' 〜 '+now.toLocaleDateString('ja-JP',{month:'numeric',day:'numeric'});const wp=S.posts.filter(p=>{const d=new Date(p.createdAt);return d>=wa&&d<=now;});document.getElementById('rp-c').textContent=wp.length;const wl=wp.filter(p=>p.likes>0);document.getElementById('rp-l').textContent=wl.length?(wl.reduce((s,p)=>s+p.likes,0)/wl.length).toFixed(0):'—';document.getElementById('rp-h').textContent=wp.filter(p=>p.hot).length;const top=[...S.posts].sort((a,b)=>b.engRate-a.engRate).slice(0,6);document.getElementById('rtop').innerHTML=top.length?top.map(card).join(''):'<div style="color:var(--g400);font-size:13px;padding:12px">投稿を追加するとTOP投稿が表示されます</div>';}
 async function genReport(){if(!S.posts.length){toast('投稿を追加してから生成してください');return;}const btn=document.getElementById('btnrep');btn.disabled=true;btn.innerHTML='<div class="spin2"></div> 生成中...';document.getElementById('raibody').innerHTML='<div class="tdots"><span></span><span></span><span></span></div>';const sum=S.posts.slice(0,30).map(p=>`[${p.accountName}/${p.sns}] ${p.genre} いいね:${p.likes} ENG:${p.engRate}% HOT:${p.hot}`).join('\n');try{const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1200,messages:[{role:"user",content:`SNSマーケターとして以下の競合投稿データを分析し日本語でレポートを作成してください。\n${sum}\n①バズりやすいジャンル・傾向②ENG率が高い投稿の共通点③自社アカウントへの示唆④企画アイデア3〜5個（<span class="itag">タグ</span>形式）\nHTMLフォーマット（p,strong,ul,li,spanのみ）で作成`}]})});const d=await r.json();document.getElementById('raibody').innerHTML=d.content.map(i=>i.text||'').join('');}catch(e){document.getElementById('raibody').innerHTML='<span style="color:var(--ig)">エラーが発生しました</span>';}btn.disabled=false;btn.innerHTML='🤖 AIレポート生成';}
 document.getElementById('pdate').value=new Date().toISOString().split('T')[0];renderCal();renderRep();pSNS('ig');aSNS('ig');
+const PT2={'ideas':'ネタストック'};
+Object.assign(PT,PT2);
+let IDEAS=[],IDEAS_CAT='all';
+function iCat(c,el){IDEAS_CAT=c;document.querySelectorAll('#ideas-filters .fc').forEach(x=>x.classList.remove('act'));if(el)el.classList.add('act');renderIdeas();}
+function saveGsUrl(){const u=document.getElementById('gsurl').value.trim();if(!u){toast('URLを入力してください');return;}localStorage.setItem('gsUrl',u);loadIdeas(u);}
+async function loadIdeas(url){if(!url)return;const el=document.getElementById('ideas-list');el.innerHTML='<div style="text-align:center;padding:30px;color:var(--g400)"><div class="tdots"><span></span><span></span><span></span></div><div style="margin-top:10px;font-size:13px">スプレッドシートを読み込み中...</div></div>';try{const r=await fetch(url);if(!r.ok)throw new Error('fetch failed');const txt=await r.text();const rows=txt.trim().split('\n').map(l=>{const cells=[];let cur='',inQ=false;for(let i=0;i<l.length;i++){const c=l[i];if(c==='"'){inQ=!inQ;}else if(c===','&&!inQ){cells.push(cur.trim());cur='';}else{cur+=c;}}cells.push(cur.trim());return cells;});const header=rows[0].map(h=>h.toLowerCase());const ci={cat:Math.max(header.findIndex(h=>h.includes('カテゴリ')||h.includes('category')),0),title:Math.max(header.findIndex(h=>h.includes('タイトル')||h.includes('title')||h.includes('メモ')||h.includes('memo')),1),url:Math.max(header.findIndex(h=>h.includes('url')),2),sns:Math.max(header.findIndex(h=>h.includes('sns')),3),note:header.findIndex(h=>h.includes('追加')||h.includes('note')||h.includes('備考'))};IDEAS=rows.slice(1).filter(r=>r.length>1&&r.some(c=>c)).map(r=>({cat:r[ci.cat]||'その他',title:r[ci.title]||'',url:r[ci.url]||'',sns:(r[ci.sns]||'').toLowerCase(),note:ci.note>=0?(r[ci.note]||''):''}));document.getElementById('nb-i').textContent=IDEAS.length;document.getElementById('ideas-filters').style.display='flex';renderIdeas();toast(`✅ ${IDEAS.length}件を読み込みました`);}catch(e){el.innerHTML='<div style="text-align:center;padding:30px;color:#ef4444"><div style="font-size:28px;margin-bottom:8px">⚠️</div><div style="font-size:14px;font-weight:600">読み込みエラー</div><div style="font-size:12px;color:var(--g500);margin-top:6px">URLが正しいか、シートが「ウェブに公開」されているか確認してください</div></div>';toast('⚠️ 読み込みに失敗しました');console.error(e);}}
+function renderIdeas(){const el=document.getElementById('ideas-list');let items=IDEAS;if(IDEAS_CAT!=='all')items=items.filter(i=>i.cat===IDEAS_CAT||(IDEAS_CAT==='その他'&&i.cat!=='競合アカウント'&&i.cat!=='ネタストック'));if(!items.length){el.innerHTML='<div style="text-align:center;padding:40px;color:var(--g400)"><div style="font-size:32px;opacity:.4;margin-bottom:10px">📭</div><div>このカテゴリにはまだありません</div></div>';return;}const catIcon={'競合アカウント':'🔍','ネタストック':'💡'};const catColor={'競合アカウント':{'bg':'#fff0f4','c':'var(--ig)'},'ネタストック':{'bg':'#fffbeb','c':'#d97706'}};el.innerHTML='<div class="ilist">'+items.map(it=>{const ci=catIcon[it.cat]||'📌';const cc=catColor[it.cat]||{bg:'#f9fafb',c:'#6b7280'};const snsLabel=it.sns==='ig'?'📸 Instagram':it.sns==='x'||it.sns==='twitter'?'𝕏 X':'';const hasUrl=it.url&&it.url.match(/^https?:\/\//);return `<div class="icard" onclick="${hasUrl?'window.open(\''+it.url.replace(/'/g,"\\'")+"','_blank')":''}">\n<div class="icard-icon">${ci}</div>\n<div class="icard-body">\n<div class="icard-title">${it.title||it.url||'（タイトルなし）'}</div>\n${hasUrl?`<a class="icard-url" href="${it.url}" target="_blank" onclick="event.stopPropagation()">${it.url}</a>`:'<span style="font-size:11px;color:var(--g300)">URLなし</span>'}\n<div class="icard-meta"><span class="itag2" style="background:${cc.bg};color:${cc.c}">${it.cat||'その他'}</span>${snsLabel?`<span class="itag2" style="background:var(--g100);color:var(--g600)">${snsLabel}</span>`:''}</div>\n${it.note?`<div class="icard-memo">${it.note}</div>`:''}\n</div>\n</div>`;}).join('')+'</div>';}
+function refreshIdeas(){const u=localStorage.getItem('gsUrl');if(!u){toast('まずURLを設定してください');return;}loadIdeas(u);}
+window.addEventListener('fb-ready',()=>{const saved=localStorage.getItem('gsUrl');if(saved){document.getElementById('gsurl').value=saved;loadIdeas(saved);}},{once:true});
 </script>
 </body>
 </html>
