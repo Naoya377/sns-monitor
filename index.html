@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#fdf7f4">
+<title>Glow OS</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fbf6f3;--bg2:#f6eeea;--card:#ffffff;--ink:#2a2326;--ink2:#7a6f72;--ink3:#a99fa3;
+  --line:#efe6e1;--line2:#e7dad3;
+  --rose:#e0708e;--rose-d:#c9577a;--rose-l:#fbeef2;--rose-m:#f8dde6;
+  --gold:#d8a657;--mint:#52b9a0;--sky:#6aa9e0;--lav:#9b8cd1;--coral:#e8896b;
+  --good:#3fae8f;--warn:#e0a13c;--bad:#dd6b6b;
+  --r:22px;--rs:16px;--rxs:12px;
+  --sh:0 6px 22px rgba(120,80,90,.08);--sh2:0 12px 40px rgba(120,80,90,.14);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;}
+body{
+  font-family:'Noto Sans JP',sans-serif;color:var(--ink);
+  background:linear-gradient(160deg,#efe7f2 0%,#e9dfe7 40%,#e6e0ea 100%);
+  display:flex;align-items:center;justify-content:center;min-height:100vh;
+  font-size:14px;-webkit-font-smoothing:antialiased;padding:0;
+}
+/* phone frame */
+.phone{
+  position:relative;width:100%;max-width:430px;height:100vh;max-height:932px;
+  background:var(--bg);overflow:hidden;display:flex;flex-direction:column;
+  box-shadow:0 30px 80px rgba(60,40,55,.35);
+}
+@media(min-width:480px){.phone{border-radius:42px;height:92vh;}}
+.dserif{font-family:'DM Serif Display',serif;}
+.dsans{font-family:'DM Sans',sans-serif;}
+
+/* status bar */
+.statusbar{display:flex;justify-content:space-between;align-items:center;padding:12px 24px 4px;font-family:'DM Sans';font-weight:600;font-size:14px;color:var(--ink);flex-shrink:0;z-index:30;}
+.statusbar .icons{display:flex;gap:6px;align-items:center;font-size:13px;}
+
+/* scroll area */
+.screen{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding-bottom:96px;}
+.screen::-webkit-scrollbar{display:none;}
+.page{display:none;animation:fade .35s ease;}
+.page.act{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* header */
+.hd{padding:6px 22px 14px;}
+.hd .greet{font-size:12px;color:var(--ink2);letter-spacing:.4px;}
+.hd .h1{font-size:25px;font-weight:700;letter-spacing:-.5px;margin-top:2px;display:flex;align-items:center;gap:8px;}
+.hd .logo-em{color:var(--rose);}
+.hd .date{font-size:11px;color:var(--ink3);margin-top:3px;letter-spacing:.5px;text-transform:uppercase;}
+.avatar{margin-left:auto;width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--rose),var(--lav));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-family:'DM Sans';font-size:15px;box-shadow:var(--sh);}
+
+/* ring score banner */
+.glowcard{margin:0 22px 18px;border-radius:var(--r);padding:20px;color:#fff;position:relative;overflow:hidden;
+  background:linear-gradient(135deg,#e0708e 0%,#cf6498 55%,#9b8cd1 100%);box-shadow:0 14px 34px rgba(200,90,130,.32);}
+.glowcard::after{content:"";position:absolute;right:-30px;top:-30px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.12);}
+.glowcard::before{content:"";position:absolute;left:-40px;bottom:-50px;width:140px;height:140px;border-radius:50%;background:rgba(255,255,255,.08);}
+.glowcard .lbl{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;opacity:.85;font-family:'DM Sans';font-weight:600;}
+.glowcard .row{display:flex;align-items:center;gap:16px;margin-top:6px;position:relative;z-index:2;}
+.glowcard .big{font-size:46px;font-weight:700;font-family:'DM Sans';line-height:1;}
+.glowcard .delta{font-size:12px;background:rgba(255,255,255,.2);padding:4px 10px;border-radius:20px;backdrop-filter:blur(4px);}
+.glowcard .sub{font-size:12px;opacity:.9;margin-top:10px;position:relative;z-index:2;line-height:1.5;}
+.ring{width:74px;height:74px;flex-shrink:0;}
+
+/* grid cards */
+.sec-t{display:flex;align-items:center;justify-content:space-between;padding:4px 24px 10px;}
+.sec-t h2{font-size:15px;font-weight:700;letter-spacing:-.2px;}
+.sec-t .more{font-size:11px;color:var(--rose);font-weight:600;}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:0 22px;}
+.card{background:var(--card);border-radius:var(--r);padding:16px;box-shadow:var(--sh);position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.6);}
+.card.tap{cursor:pointer;transition:transform .15s,box-shadow .15s;}
+.card.tap:active{transform:scale(.97);}
+.card .ci{width:34px;height:34px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:17px;margin-bottom:10px;}
+.ci.steps{background:#fdeede;color:#d8920f;}
+.ci.sleep{background:#eae6fb;color:#7a67c9;}
+.ci.move{background:#fbe3e9;color:var(--rose-d);}
+.ci.weight{background:#dff3ee;color:#2f9c7f;}
+.ci.water{background:#e2f0fb;color:#3d86c9;}
+.ci.heart{background:#fbe1e1;color:#d65555;}
+.card .clbl{font-size:11px;color:var(--ink2);font-weight:500;}
+.card .cval{font-size:24px;font-weight:700;font-family:'DM Sans';margin-top:2px;letter-spacing:-.5px;display:flex;align-items:baseline;gap:3px;}
+.card .cval small{font-size:12px;color:var(--ink2);font-weight:500;}
+.card .cfoot{font-size:11px;color:var(--ink3);margin-top:6px;display:flex;align-items:center;gap:5px;}
+.tag{font-size:10px;padding:2px 8px;border-radius:10px;font-weight:600;}
+.tag.g{background:#e3f5ee;color:var(--good);}
+.tag.w{background:#fbf0db;color:var(--warn);}
+.tag.b{background:#fce4e4;color:var(--bad);}
+.full{grid-column:1 / -1;}
+
+/* progress */
+.pbar{height:7px;border-radius:6px;background:var(--bg2);overflow:hidden;margin-top:10px;}
+.pbar i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--rose),var(--lav));}
+.pbar.w i{background:linear-gradient(90deg,#5fb0e8,#3d86c9);}
+.pbar.s i{background:linear-gradient(90deg,#d8920f,#f0b94e);}
+
+/* AI insight chip */
+.ai{display:flex;gap:10px;align-items:flex-start;background:linear-gradient(135deg,var(--rose-l),#f3effb);border:1px solid var(--rose-m);border-radius:var(--rs);padding:12px 14px;margin:14px 22px 0;}
+.ai .spark{width:26px;height:26px;border-radius:9px;background:linear-gradient(135deg,var(--rose),var(--lav));color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.ai .txt{font-size:12.5px;line-height:1.55;color:var(--ink);}
+.ai .txt b{color:var(--rose-d);font-weight:700;}
+.ai .alabel{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--rose-d);font-weight:700;font-family:'DM Sans';display:block;margin-bottom:3px;}
+
+/* detail blocks */
+.block{background:var(--card);border-radius:var(--r);margin:0 22px 14px;padding:18px;box-shadow:var(--sh);border:1px solid rgba(255,255,255,.6);}
+.block .bt{font-size:13px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.block .bt .dot{width:8px;height:8px;border-radius:50%;}
+
+/* stat row */
+.srow{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--line);}
+.srow:last-child{border-bottom:none;}
+.srow .sl{font-size:12.5px;color:var(--ink2);}
+.srow .sv{font-size:14px;font-weight:600;font-family:'DM Sans';}
+
+/* segmented */
+.seg{display:flex;background:var(--bg2);border-radius:12px;padding:4px;margin:0 22px 14px;}
+.seg button{flex:1;border:none;background:none;padding:8px;border-radius:9px;font-size:12px;font-weight:600;color:var(--ink2);font-family:'Noto Sans JP';transition:.2s;}
+.seg button.on{background:#fff;color:var(--ink);box-shadow:0 2px 8px rgba(0,0,0,.06);}
+
+/* correlation rows */
+.corr{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--line);}
+.corr:last-child{border-bottom:none;}
+.corr .pair{display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;width:120px;flex-shrink:0;}
+.corr .vs{color:var(--ink3);font-size:10px;font-weight:400;}
+.corrbar{flex:1;height:8px;background:var(--bg2);border-radius:6px;overflow:hidden;position:relative;}
+.corrbar i{position:absolute;top:0;bottom:0;border-radius:6px;}
+.corr .cv{font-size:11px;font-weight:700;font-family:'DM Sans';width:42px;text-align:right;flex-shrink:0;}
+
+/* prediction */
+.pred-hero{margin:0 22px 16px;background:linear-gradient(135deg,#2a2336 0%,#3d3450 60%,#5a4a6e 100%);border-radius:var(--r);padding:22px;color:#fff;position:relative;overflow:hidden;}
+.pred-hero::after{content:"✨";position:absolute;right:18px;top:16px;font-size:22px;opacity:.5;}
+.pred-flow{display:flex;align-items:center;justify-content:center;gap:18px;margin:8px 0 4px;}
+.pred-node{text-align:center;}
+.pred-node .pn-lbl{font-size:10px;opacity:.7;letter-spacing:1px;text-transform:uppercase;font-family:'DM Sans';}
+.pred-node .pn-val{font-size:42px;font-weight:700;font-family:'DM Sans';line-height:1.05;}
+.pred-node.now .pn-val{opacity:.65;}
+.pred-arrow{font-size:24px;opacity:.6;}
+.pred-node.fut .pn-val{background:linear-gradient(90deg,#f5b8cf,#bfa9e8);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.pred-gain{display:flex;gap:10px;margin:0 22px 14px;}
+.pred-gain .pg{flex:1;background:var(--card);border-radius:var(--rs);padding:13px 10px;text-align:center;box-shadow:var(--sh);}
+.pred-gain .pg .pgl{font-size:11px;color:var(--ink2);}
+.pred-gain .pg .pgv{font-size:19px;font-weight:700;font-family:'DM Sans';margin-top:4px;}
+
+/* coach */
+.coach-card{margin:0 22px 16px;background:var(--card);border-radius:var(--r);padding:20px;box-shadow:var(--sh2);border:1px solid rgba(255,255,255,.6);}
+.coach-greet{font-size:18px;font-weight:700;display:flex;align-items:center;gap:8px;}
+.coach-sub{font-size:12px;color:var(--ink2);margin-top:4px;}
+.yest{display:flex;gap:10px;margin:16px 0;}
+.yest .yc{flex:1;background:var(--bg);border-radius:var(--rxs);padding:11px 8px;text-align:center;}
+.yest .yc .yl{font-size:10px;color:var(--ink2);}
+.yest .yc .yv{font-size:16px;font-weight:700;font-family:'DM Sans';margin-top:3px;}
+.todo{margin-top:6px;}
+.todo .ti{display:flex;align-items:center;gap:11px;padding:11px 0;border-bottom:1px solid var(--line);}
+.todo .ti:last-child{border:none;}
+.chk{width:22px;height:22px;border-radius:7px;border:2px solid var(--line2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;transition:.2s;cursor:pointer;}
+.chk.done{background:var(--rose);border-color:var(--rose);}
+.todo .ti.done .tt{color:var(--ink3);text-decoration:line-through;}
+.tt{font-size:13.5px;font-weight:500;}
+.streak{display:flex;align-items:center;gap:14px;margin:0 22px 16px;background:linear-gradient(135deg,#fff4ea,#fdeef3);border:1px solid #f6e3d4;border-radius:var(--r);padding:16px 18px;}
+.streak .flame{font-size:34px;}
+.streak .sk-num{font-size:30px;font-weight:700;font-family:'DM Sans';color:#e0833c;line-height:1;}
+.streak .sk-lbl{font-size:11px;color:var(--ink2);margin-top:2px;}
+
+/* concept */
+.concept{margin:0 22px 16px;background:linear-gradient(165deg,#241f2e,#3a3147);border-radius:var(--r);padding:26px 22px;color:#fff;position:relative;overflow:hidden;}
+.concept::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 80% 10%,rgba(224,112,142,.35),transparent 45%);}
+.concept .ctag{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#e9b8c8;font-family:'DM Sans';font-weight:600;position:relative;}
+.concept .ctitle{font-family:'DM Serif Display';font-size:24px;line-height:1.3;margin:12px 0;position:relative;}
+.concept .ctitle em{color:#f0a9c1;font-style:italic;}
+.concept .cbody{font-size:13px;line-height:1.85;opacity:.88;position:relative;}
+.concept .pills{display:flex;flex-wrap:wrap;gap:7px;margin:16px 0;position:relative;}
+.concept .pill{font-size:11px;padding:5px 12px;border-radius:20px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);}
+
+/* mini canvas chart wrapper */
+.chartwrap{position:relative;width:100%;height:130px;margin-top:6px;}
+
+/* bottom nav */
+.nav{position:absolute;bottom:0;left:0;right:0;height:78px;background:rgba(255,255,255,.86);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--line);display:flex;justify-content:space-around;align-items:flex-start;padding-top:12px;z-index:40;}
+.nav button{border:none;background:none;display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--ink3);font-family:'Noto Sans JP';font-size:10px;font-weight:600;flex:1;transition:.2s;}
+.nav button .ni{font-size:21px;line-height:1;}
+.nav button.on{color:var(--rose);}
+.nav .fab{margin-top:-26px;width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,var(--rose),var(--lav));box-shadow:0 8px 22px rgba(200,90,130,.45);display:flex;align-items:center;justify-content:center;color:#fff;font-size:24px;flex:0 0 auto;}
+.nav .fab+span{display:none;}
+
+/* sync banner */
+.synced{display:flex;align-items:center;gap:7px;justify-content:center;font-size:11px;color:var(--ink3);padding:2px 0 12px;}
+.sdot{width:7px;height:7px;border-radius:50%;background:var(--good);box-shadow:0 0 0 3px rgba(63,174,143,.18);}
+
+/* watch badge */
+.watch-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:600;color:var(--ink2);background:var(--bg2);padding:3px 9px;border-radius:20px;}
+
+.spacer{height:6px;}
+.fadein{animation:fade .4s ease;}
+</style>
+</head>
+<body>
+<div class="phone">
+  <!-- status bar -->
+  <div class="statusbar">
+    <span id="clock">9:41</span>
+    <span class="icons">●●●  📶  <b>97%</b>🔋</span>
+  </div>
+
+  <div class="screen" id="screen">
+
+    <!-- ============ HOME ============ -->
+    <div class="page act" id="p-home">
+      <div class="hd" style="display:flex;align-items:flex-start;">
+        <div>
+          <div class="greet">おはようございます、Naoyaさん</div>
+          <div class="h1"><span>Glow<span class="logo-em">OS</span></span></div>
+          <div class="date">Friday · June 19</div>
+        </div>
+        <div class="avatar">N</div>
+      </div>
+
+      <div class="synced"><span class="sdot"></span> Apple Watch · HealthKit 同期済み · 2分前</div>
+
+      <!-- glow score -->
+      <div class="glowcard">
+        <div class="lbl">Today's Glow Score</div>
+        <div class="row">
+          <svg class="ring" viewBox="0 0 36 36">
+            <path d="M18 2.5 a15.5 15.5 0 0 1 0 31 a15.5 15.5 0 0 1 0 -31" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="3.2"/>
+            <path d="M18 2.5 a15.5 15.5 0 0 1 0 31 a15.5 15.5 0 0 1 0 -31" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-dasharray="74 100"/>
+          </svg>
+          <div>
+            <div class="big">74</div>
+          </div>
+          <div class="delta">▲ +3 昨日</div>
+        </div>
+        <div class="sub">睡眠・歩数・運動がバランス良好。今日のコンディションは <b style="color:#fff;font-weight:700">好調</b> です。</div>
+      </div>
+
+      <!-- today metrics -->
+      <div class="sec-t"><h2>今日のアクティビティ</h2><span class="watch-badge">⌚ 自動取得</span></div>
+      <div class="grid">
+        <div class="card tap" onclick="go('move')">
+          <div class="ci steps">🚶</div>
+          <div class="clbl">歩数</div>
+          <div class="cval">8,236<small>歩</small></div>
+          <div class="pbar s"><i style="width:103%"></i></div>
+          <div class="cfoot"><span class="tag g">達成率 103%</span> 目標 8,000</div>
+        </div>
+
+        <div class="card tap" onclick="go('sleep-d')">
+          <div class="ci sleep">🌙</div>
+          <div class="clbl">睡眠</div>
+          <div class="cval">7<small>時間</small>42<small>分</small></div>
+          <div class="pbar"><i style="width:92%"></i></div>
+          <div class="cfoot"><span class="tag g">スコア 92</span> 深い睡眠 ▲</div>
+        </div>
+
+        <div class="card">
+          <div class="ci move">💪</div>
+          <div class="clbl">運動（今週）</div>
+          <div class="cval">3<small>回</small></div>
+          <div class="cfoot">筋トレ3 · 有酸素 <b style="color:var(--ink);font-family:'DM Sans'">95</b>分</div>
+        </div>
+
+        <div class="card">
+          <div class="ci heart">❤️</div>
+          <div class="clbl">安静時心拍</div>
+          <div class="cval">58<small>bpm</small></div>
+          <div class="cfoot"><span class="tag g">良好</span> 7日平均 60</div>
+        </div>
+
+        <div class="card tap" onclick="go('weight-d')">
+          <div class="ci weight">⚖️</div>
+          <div class="clbl">体重</div>
+          <div class="cval">68.0<small>kg</small></div>
+          <div class="cfoot">BMI 22.3 · 体脂肪 18.4%</div>
+        </div>
+
+        <div class="card tap" onclick="addWater()">
+          <div class="ci water">💧</div>
+          <div class="clbl">水分</div>
+          <div class="cval" id="waterVal">1,600<small>ml</small></div>
+          <div class="pbar w"><i id="waterBar" style="width:80%"></i></div>
+          <div class="cfoot">目標 2L · <span id="waterLeft">あと 400ml</span></div>
+        </div>
+      </div>
+
+      <!-- AI insight -->
+      <div class="ai">
+        <div class="spark">✦</div>
+        <div class="txt">
+          <span class="alabel">AI Insight</span>
+          <b>目標達成です。</b> 今週の平均より <b>+1,200歩</b> 多く歩けています。さらに <b>昨日より深い睡眠が増加</b> しており、<b>赤みの改善</b> が期待できる状態です。
+        </div>
+      </div>
+
+      <div class="sec-t" style="margin-top:18px"><h2>水分</h2><span class="more" onclick="addWater()">+ 1杯 記録</span></div>
+      <div class="ai" style="margin-top:0">
+        <div class="spark" style="background:linear-gradient(135deg,#5fb0e8,#3d86c9)">💧</div>
+        <div class="txt"><span class="alabel" style="color:#3d86c9">Hydration Coach</span><span id="waterAi">目標まで <b>あとコップ2杯</b>。こまめな水分補給で皮脂バランスが安定します。</span></div>
+      </div>
+
+      <div class="spacer"></div>
+    </div>
+
+    <!-- ============ ANALYSIS ============ -->
+    <div class="page" id="p-analysis">
+      <div class="hd"><div><div class="greet">Lifestyle × Skin</div><div class="h1">AI 分析</div><div class="date">生活データと肌の相関</div></div></div>
+
+      <!-- lifestyle analysis -->
+      <div class="sec-t"><h2>AI Lifestyle Analysis</h2></div>
+      <div class="block">
+        <div class="bt"><span class="dot" style="background:var(--rose)"></span>生活習慣 → 肌・健康への影響</div>
+        <div class="corr">
+          <div class="pair">🌙 睡眠6時間未満</div>
+          <div class="corrbar"><i style="left:50%;width:24%;background:var(--bad)"></i></div>
+          <div class="cv" style="color:var(--bad)">赤み +12%</div>
+        </div>
+        <div class="corr">
+          <div class="pair">🚶 歩数8,000歩↑</div>
+          <div class="corrbar"><i style="right:50%;width:20%;background:var(--good)"></i></div>
+          <div class="cv" style="color:var(--good)">皮脂 −10%</div>
+        </div>
+        <div class="corr">
+          <div class="pair">💪 運動 週3回</div>
+          <div class="corrbar"><i style="right:50%;width:16%;background:var(--good)"></i></div>
+          <div class="cv" style="color:var(--good)">肌 +8</div>
+        </div>
+        <div class="corr">
+          <div class="pair">💧 水分 2L達成</div>
+          <div class="corrbar"><i style="right:50%;width:14%;background:var(--good)"></i></div>
+          <div class="cv" style="color:var(--good)">皮脂 −7%</div>
+        </div>
+      </div>
+
+      <!-- correlation analysis -->
+      <div class="sec-t"><h2>肌との相関分析</h2></div>
+      <div class="block">
+        <div class="bt"><span class="dot" style="background:var(--lav)"></span>30日間の相関スコア</div>
+        <div class="corr">
+          <div class="pair">睡眠 <span class="vs">vs</span> 赤み</div>
+          <div class="corrbar"><i style="left:8%;width:62%;background:linear-gradient(90deg,#e88,#dd6b6b)"></i></div>
+          <div class="cv">強い</div>
+        </div>
+        <div class="corr">
+          <div class="pair">運動 <span class="vs">vs</span> 毛穴</div>
+          <div class="corrbar"><i style="left:8%;width:44%;background:linear-gradient(90deg,#f0c06a,#d8a657)"></i></div>
+          <div class="cv">中</div>
+        </div>
+        <div class="corr">
+          <div class="pair">水分 <span class="vs">vs</span> 皮脂</div>
+          <div class="corrbar"><i style="left:8%;width:55%;background:linear-gradient(90deg,#6fc0ec,#3d86c9)"></i></div>
+          <div class="cv">中強</div>
+        </div>
+        <div class="corr">
+          <div class="pair">食事 <span class="vs">vs</span> ニキビ</div>
+          <div class="corrbar"><i style="left:8%;width:50%;background:linear-gradient(90deg,#7ccfb6,#52b9a0)"></i></div>
+          <div class="cv">中強</div>
+        </div>
+      </div>
+
+      <div class="ai">
+        <div class="spark">✦</div>
+        <div class="txt"><span class="alabel">AI Correlation</span>
+          あなたは <b>睡眠6時間以下で赤みが増える傾向</b> があります。また <b>豆乳を飲んでいる週は皮脂が安定</b> しています。睡眠の確保を優先しましょう。
+        </div>
+      </div>
+      <div class="spacer"></div>
+    </div>
+
+    <!-- ============ PREDICTION ============ -->
+    <div class="page" id="p-predict">
+      <div class="hd"><div><div class="greet">Future Prediction</div><div class="h1">90日後の自分</div><div class="date">現在の習慣を維持した場合</div></div></div>
+
+      <div class="pred-hero">
+        <div class="lbl" style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;opacity:.7;font-family:'DM Sans';font-weight:600">Skin Score Forecast</div>
+        <div class="pred-flow">
+          <div class="pred-node now"><div class="pn-lbl">現在</div><div class="pn-val">69</div></div>
+          <div class="pred-arrow">→</div>
+          <div class="pred-node fut"><div class="pn-lbl">90日後</div><div class="pn-val">84</div></div>
+        </div>
+        <div style="text-align:center;font-size:12px;opacity:.85;margin-top:6px">予測上昇幅 <b style="color:#f0a9c1">+15pt</b></div>
+      </div>
+
+      <div class="sec-t"><h2>改善予測</h2><span class="watch-badge">90日</span></div>
+      <div class="pred-gain">
+        <div class="pg"><div class="pgl">赤み</div><div class="pgv" style="color:var(--good)">−28%</div></div>
+        <div class="pg"><div class="pgl">皮脂</div><div class="pgv" style="color:var(--good)">−17%</div></div>
+        <div class="pg"><div class="pgl">毛穴</div><div class="pgv" style="color:var(--good)">+14%</div></div>
+      </div>
+
+      <div class="block">
+        <div class="bt"><span class="dot" style="background:var(--lav)"></span>肌スコア推移予測</div>
+        <div class="chartwrap"><canvas id="predChart"></canvas></div>
+        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--ink3);margin-top:4px"><span>今日</span><span>30日</span><span>60日</span><span>90日</span></div>
+      </div>
+
+      <div class="ai">
+        <div class="spark">✦</div>
+        <div class="txt"><span class="alabel">AI Forecast</span>現在の <b>睡眠・運動・水分の習慣を維持</b> した場合の予測です。特に <b>赤みの改善幅が大きく</b>、3週目から体感できる見込みです。</div>
+      </div>
+      <div class="spacer"></div>
+    </div>
+
+    <!-- ============ COACH ============ -->
+    <div class="page" id="p-coach">
+      <div class="hd"><div><div class="greet">AI Habit Coach</div><div class="h1">今日のコーチ</div><div class="date">毎朝の通知</div></div></div>
+
+      <div class="coach-card">
+        <div class="coach-greet">☀️ おはようございます</div>
+        <div class="coach-sub">昨日のあなたの記録です</div>
+        <div class="yest">
+          <div class="yc"><div class="yl">😴 睡眠</div><div class="yv">7<small style="font-size:11px">h</small></div></div>
+          <div class="yc"><div class="yl">🚶 歩数</div><div class="yv">9,210</div></div>
+          <div class="yc"><div class="yl">💧 水分</div><div class="yv">1.5<small style="font-size:11px">L</small></div></div>
+        </div>
+        <div style="font-size:12px;font-weight:700;color:var(--ink2);margin:6px 0 2px">今日の目標</div>
+        <div class="todo" id="todo">
+          <div class="ti" onclick="toggleTodo(this)"><div class="chk">✓</div><div class="tt">水を 2L 飲む</div></div>
+          <div class="ti" onclick="toggleTodo(this)"><div class="chk">✓</div><div class="tt">BHA（角質ケア）を使う</div></div>
+          <div class="ti" onclick="toggleTodo(this)"><div class="chk">✓</div><div class="tt">20分の散歩をする</div></div>
+        </div>
+      </div>
+
+      <div class="streak">
+        <div class="flame">🔥</div>
+        <div><div class="sk-num">17<small style="font-size:14px;color:var(--ink2)"> 日</small></div><div class="sk-lbl">継続中 · ベスト記録に挑戦中</div></div>
+      </div>
+
+      <div class="ai">
+        <div class="spark">✦</div>
+        <div class="txt"><span class="alabel">Morning Coach</span>運動習慣が安定しています。今日も <b>20分の散歩</b> で皮脂コントロールに良い状態をキープしましょう。水分はあとコップ2杯です。</div>
+      </div>
+
+      <!-- concept -->
+      <div class="sec-t" style="margin-top:20px"><h2>Glow OS とは</h2></div>
+      <div class="concept">
+        <div class="ctag">Personal Life Operating System</div>
+        <div class="ctitle">Habit Appではない。<br>美容アプリでもない。<br><em>理想の自分への伴走者。</em></div>
+        <div class="pills">
+          <span class="pill">睡眠</span><span class="pill">食事</span><span class="pill">運動</span><span class="pill">美容</span><span class="pill">健康</span>
+        </div>
+        <div class="cbody">Glow OSは、人間の睡眠・食事・運動・美容・健康を統合し、AIが「理想の自分」になるまで伴走する <b style="color:#f0a9c1">Personal Life Operating System</b> です。</div>
+      </div>
+      <div class="spacer"></div>
+    </div>
+
+    <!-- ===== DETAIL: SLEEP ===== -->
+    <div class="page" id="p-sleep-d">
+      <div class="hd" style="align-items:center;display:flex"><span onclick="go('home')" style="font-size:20px;margin-right:12px">‹</span><div><div class="greet">Apple Watch</div><div class="h1">睡眠の詳細</div></div></div>
+      <div class="block" style="text-align:center">
+        <div style="font-size:11px;color:var(--ink2);letter-spacing:1px;text-transform:uppercase">Last Night</div>
+        <div style="font-size:40px;font-weight:700;font-family:'DM Sans';margin:4px 0">7<small style="font-size:18px;color:var(--ink2)">h</small> 42<small style="font-size:18px;color:var(--ink2)">m</small></div>
+        <span class="tag g" style="font-size:12px">スコア 92点</span>
+      </div>
+      <div class="block">
+        <div class="bt"><span class="dot" style="background:var(--lav)"></span>睡眠段階</div>
+        <div class="chartwrap" style="height:60px"><canvas id="sleepChart"></canvas></div>
+        <div class="srow"><span class="sl">🛏 就寝時間</span><span class="sv">23:18</span></div>
+        <div class="srow"><span class="sl">☀️ 起床時間</span><span class="sv">07:00</span></div>
+        <div class="srow"><span class="sl">🌊 深い睡眠</span><span class="sv">1h 34m <span class="tag g">▲ +18m</span></span></div>
+        <div class="srow"><span class="sl">💭 レム睡眠</span><span class="sv">1h 52m</span></div>
+        <div class="srow"><span class="sl">❤️ 平均心拍</span><span class="sv">54 bpm</span></div>
+      </div>
+      <div class="ai"><div class="spark">✦</div><div class="txt"><span class="alabel">AI Insight</span><b>昨日より深い睡眠が増えています。</b> この調子なら <b>赤み改善が期待できます。</b></div></div>
+      <div class="spacer"></div>
+    </div>
+
+    <!-- ===== DETAIL: MOVE ===== -->
+    <div class="page" id="p-move">
+      <div class="hd" style="align-items:center;display:flex"><span onclick="go('home')" style="font-size:20px;margin-right:12px">‹</span><div><div class="greet">Apple Watch</div><div class="h1">運動・歩数</div></div></div>
+      <div class="grid">
+        <div class="card"><div class="ci steps">🚶</div><div class="clbl">歩数</div><div class="cval">8,236</div><div class="cfoot">距離 6.1km · 達成 103%</div></div>
+        <div class="card"><div class="ci move">🔥</div><div class="clbl">消費カロリー</div><div class="cval">462<small>kcal</small></div><div class="cfoot">アクティブ 移動分</div></div>
+        <div class="card"><div class="ci move">💪</div><div class="clbl">筋トレ</div><div class="cval">3<small>回</small></div><div class="cfoot">今週</div></div>
+        <div class="card"><div class="ci heart">🏃</div><div class="clbl">有酸素</div><div class="cval">95<small>分</small></div><div class="cfoot">ランニング・ウォーキング</div></div>
+      </div>
+      <div class="block" style="margin-top:14px">
+        <div class="bt"><span class="dot" style="background:#d8920f"></span>今週の歩数</div>
+        <div class="chartwrap"><canvas id="stepChart"></canvas></div>
+      </div>
+      <div class="ai"><div class="spark">✦</div><div class="txt"><span class="alabel">AI Insight</span><b>運動習慣が安定しています。</b> 今週の平均より <b>+1,200歩</b>。<b>皮脂コントロールに良い状態</b> です。</div></div>
+      <div class="spacer"></div>
+    </div>
+
+    <!-- ===== DETAIL: WEIGHT ===== -->
+    <div class="page" id="p-weight-d">
+      <div class="hd" style="align-items:center;display:flex"><span onclick="go('home')" style="font-size:20px;margin-right:12px">‹</span><div><div class="greet">HealthKit</div><div class="h1">体重管理</div></div></div>
+      <div class="grid">
+        <div class="card"><div class="ci weight">⚖️</div><div class="clbl">現在の体重</div><div class="cval">68.0<small>kg</small></div><div class="cfoot"><span class="tag g">−0.4kg</span> 30日</div></div>
+        <div class="card"><div class="ci weight">📊</div><div class="clbl">BMI</div><div class="cval">22.3</div><div class="cfoot">標準範囲</div></div>
+        <div class="card full"><div class="ci weight">💧</div><div class="clbl">体脂肪率</div><div class="cval">18.4<small>%</small></div><div class="pbar"><i style="width:46%"></i></div><div class="cfoot">アスリート〜標準</div></div>
+      </div>
+      <div class="seg" style="margin-top:14px"><button class="on" onclick="setWeightRange(this,30)">30日</button><button onclick="setWeightRange(this,90)">90日</button><button onclick="setWeightRange(this,365)">1年</button></div>
+      <div class="block" style="margin-top:0">
+        <div class="bt"><span class="dot" style="background:var(--mint)"></span>体重推移</div>
+        <div class="chartwrap"><canvas id="weightChart"></canvas></div>
+      </div>
+      <div class="ai"><div class="spark">✦</div><div class="txt"><span class="alabel">AI Insight</span>体重は <b>安定して緩やかに減少中</b>。運動量と相関しており、現在のペースは理想的です。</div></div>
+      <div class="spacer"></div>
+    </div>
+
+  </div>
+
+  <!-- bottom nav -->
+  <div class="nav">
+    <button class="on" id="n-home" onclick="go('home')"><span class="ni">◎</span>ホーム</button>
+    <button id="n-analysis" onclick="go('analysis')"><span class="ni">📈</span>分析</button>
+    <button class="fab" onclick="addWater()">＋</button>
+    <button id="n-predict" onclick="go('predict')"><span class="ni">🔮</span>予測</button>
+    <button id="n-coach" onclick="go('coach')"><span class="ni">🌱</span>コーチ</button>
+  </div>
+</div>
+
+<script>
+/* ---------- navigation ---------- */
+const tabPages = {home:'p-home',analysis:'p-analysis',predict:'p-predict',coach:'p-coach'};
+const detailPages = {'sleep-d':'p-sleep-d','move':'p-move','weight-d':'p-weight-d'};
+function go(key){
+  const id = tabPages[key]||detailPages[key];
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('act'));
+  document.getElementById(id).classList.add('act');
+  // nav highlight
+  document.querySelectorAll('.nav button[id]').forEach(b=>b.classList.remove('on'));
+  if(tabPages[key]) document.getElementById('n-'+key).classList.add('on');
+  document.getElementById('screen').scrollTop=0;
+  drawAll();
+}
+
+/* ---------- water tracker ---------- */
+let water = 1600; const goal = 2000;
+function addWater(){
+  water = Math.min(goal+200, water+200);
+  const left = Math.max(0, goal-water);
+  const cups = Math.ceil(left/200);
+  document.getElementById('waterVal').innerHTML = water.toLocaleString()+'<small>ml</small>';
+  document.getElementById('waterBar').style.width = Math.min(100,water/goal*100)+'%';
+  document.getElementById('waterLeft').textContent = left>0 ? 'あと '+left+'ml' : '目標達成 🎉';
+  const ai = document.getElementById('waterAi');
+  ai.innerHTML = left>0 ? ('目標まで <b>あとコップ'+cups+'杯</b>。こまめな水分補給で皮脂バランスが安定します。')
+                        : '🎉 <b>目標2L達成！</b> 皮脂バランスが整いやすい状態です。';
+  const fab=document.querySelector('.fab'); fab.style.transform='scale(.85)'; setTimeout(()=>fab.style.transform='',150);
+}
+
+/* ---------- todo ---------- */
+function toggleTodo(el){
+  el.classList.toggle('done');
+  el.querySelector('.chk').classList.toggle('done');
+}
+
+/* ---------- clock ---------- */
+function tick(){const d=new Date();document.getElementById('clock').textContent=d.getHours()+':'+String(d.getMinutes()).padStart(2,'0');}
+tick(); setInterval(tick,10000);
+
+/* ---------- canvas charts ---------- */
+function setupCanvas(cv){
+  const dpr=window.devicePixelRatio||2; const r=cv.parentElement.getBoundingClientRect();
+  cv.width=r.width*dpr; cv.height=r.height*dpr; cv.style.width=r.width+'px'; cv.style.height=r.height+'px';
+  const ctx=cv.getContext('2d'); ctx.scale(dpr,dpr); return {ctx,w:r.width,h:r.height};
+}
+function lineChart(id,data,color,opt={}){
+  const cv=document.getElementById(id); if(!cv)return; const {ctx,w,h}=setupCanvas(cv);
+  const pad=opt.pad||14, min=Math.min(...data)*.98, max=Math.max(...data)*1.02, range=max-min||1;
+  const X=i=>pad+i*(w-pad*2)/(data.length-1), Y=v=>h-pad-(v-min)/range*(h-pad*2);
+  // area fill
+  const grad=ctx.createLinearGradient(0,0,0,h); grad.addColorStop(0,color+'44'); grad.addColorStop(1,color+'02');
+  ctx.beginPath(); ctx.moveTo(X(0),Y(data[0]));
+  data.forEach((v,i)=>{ if(i){const cx=(X(i-1)+X(i))/2; ctx.bezierCurveTo(cx,Y(data[i-1]),cx,Y(v),X(i),Y(v));}});
+  ctx.lineTo(X(data.length-1),h-pad); ctx.lineTo(X(0),h-pad); ctx.closePath(); ctx.fillStyle=grad; ctx.fill();
+  // line
+  ctx.beginPath(); ctx.moveTo(X(0),Y(data[0]));
+  data.forEach((v,i)=>{ if(i){const cx=(X(i-1)+X(i))/2; ctx.bezierCurveTo(cx,Y(data[i-1]),cx,Y(v),X(i),Y(v));}});
+  ctx.strokeStyle=color; ctx.lineWidth=2.5; ctx.lineJoin='round'; ctx.stroke();
+  // dot on last
+  if(opt.dot!==false){ctx.beginPath();ctx.arc(X(data.length-1),Y(data[data.length-1]),4,0,7);ctx.fillStyle=color;ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();}
+  if(opt.dashFrom!=null){ // forecast: redraw tail dashed-ish handled by caller via two series
+  }
+}
+function barChart(id,data,labels,color){
+  const cv=document.getElementById(id); if(!cv)return; const {ctx,w,h}=setupCanvas(cv);
+  const pad=16, max=Math.max(...data)*1.1, bw=(w-pad*2)/data.length*.55;
+  data.forEach((v,i)=>{
+    const x=pad+i*(w-pad*2)/data.length+( (w-pad*2)/data.length-bw)/2;
+    const bh=(v/max)*(h-pad-16), y=h-16-bh;
+    ctx.fillStyle=color; ctx.beginPath();
+    if(ctx.roundRect)ctx.roundRect(x,y,bw,bh,5); else ctx.rect(x,y,bw,bh);
+    ctx.fill();
+    ctx.fillStyle='#a99fa3'; ctx.font='9px DM Sans'; ctx.textAlign='center';
+    ctx.fillText(labels[i],x+bw/2,h-3);
+  });
+}
+function predChart(){
+  const cv=document.getElementById('predChart'); if(!cv)return; const {ctx,w,h}=setupCanvas(cv);
+  const data=[69,71,73,76,78,81,84]; const pad=14;
+  const min=66,max=86,range=max-min;
+  const X=i=>pad+i*(w-pad*2)/(data.length-1), Y=v=>h-pad-(v-min)/range*(h-pad*2);
+  const grad=ctx.createLinearGradient(0,0,0,h); grad.addColorStop(0,'#9b8cd166'); grad.addColorStop(1,'#9b8cd102');
+  ctx.beginPath(); ctx.moveTo(X(0),Y(data[0]));
+  data.forEach((v,i)=>{if(i){const cx=(X(i-1)+X(i))/2;ctx.bezierCurveTo(cx,Y(data[i-1]),cx,Y(v),X(i),Y(v));}});
+  ctx.lineTo(X(6),h-pad);ctx.lineTo(X(0),h-pad);ctx.closePath();ctx.fillStyle=grad;ctx.fill();
+  ctx.beginPath(); ctx.moveTo(X(0),Y(data[0]));
+  data.forEach((v,i)=>{if(i){const cx=(X(i-1)+X(i))/2;ctx.bezierCurveTo(cx,Y(data[i-1]),cx,Y(v),X(i),Y(v));}});
+  const lg=ctx.createLinearGradient(0,0,w,0); lg.addColorStop(0,'#e0708e'); lg.addColorStop(1,'#9b8cd1');
+  ctx.strokeStyle=lg; ctx.lineWidth=3; ctx.lineCap='round'; ctx.stroke();
+  ctx.beginPath();ctx.arc(X(0),Y(69),4,0,7);ctx.fillStyle='#e0708e';ctx.fill();
+  ctx.beginPath();ctx.arc(X(6),Y(84),5,0,7);ctx.fillStyle='#9b8cd1';ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();
+}
+function sleepStages(){
+  const cv=document.getElementById('sleepChart'); if(!cv)return; const {ctx,w,h}=setupCanvas(cv);
+  // segments: deep, core, rem, awake patterns across night
+  const segs=[['#5a4a9e',.18],['#7a67c9',.30],['#9b8cd1',.14],['#7a67c9',.20],['#b6a9e0',.10],['#9b8cd1',.08]];
+  let x=0; segs.forEach(([c,frac])=>{const sw=w*frac;ctx.fillStyle=c;if(ctx.roundRect){ctx.beginPath();ctx.roundRect(x+1,8,sw-2,h-16,4);ctx.fill();}else ctx.fillRect(x+1,8,sw-2,h-16);x+=sw;});
+}
+
+let weightRange=30;
+function setWeightRange(btn,days){
+  document.querySelectorAll('#p-weight-d .seg button').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on'); weightRange=days; drawWeight();
+}
+function genWeight(days){
+  const pts = days<=30?15:days<=90?18:24; const arr=[]; let v=days===365?71:days===90?69.2:68.6;
+  for(let i=0;i<pts;i++){ v += (Math.sin(i*1.3)*0.18) - 0.04*(days/100); arr.push(+v.toFixed(1)); }
+  arr[arr.length-1]=68.0; return arr;
+}
+function drawWeight(){ lineChart('weightChart',genWeight(weightRange),'#52b9a0'); }
+
+function drawAll(){
+  predChart();
+  sleepStages();
+  barChart('stepChart',[7800,9210,6400,8800,10200,7600,8236],['月','火','水','木','金','土','日'],'#e9b24a');
+  drawWeight();
+}
+window.addEventListener('resize',()=>setTimeout(drawAll,100));
+window.addEventListener('load',()=>setTimeout(drawAll,60));
+setTimeout(drawAll,120);
+</script>
+</body>
+</html>
